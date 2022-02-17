@@ -4,6 +4,6 @@ import App from './components/app/app';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <App priceValue: ='60' text='' />
   </React.StrictMode>,
   document.getElementById('root'));

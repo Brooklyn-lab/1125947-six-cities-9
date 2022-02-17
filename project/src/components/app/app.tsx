@@ -1,8 +1,7 @@
-// import MainScreen from '../main-screen/main-screen';
-import MainEmptyScreen from '../main-empty-screen/main-empty-screen';
+import MainScreen from '../main-screen/main-screen';
 
 function App(): JSX.Element {
-  return <MainEmptyScreen />;
+  return <MainScreen />;
 }
 
 export default App;
