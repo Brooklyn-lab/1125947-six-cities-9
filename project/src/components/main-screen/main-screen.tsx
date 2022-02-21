@@ -1,10 +1,11 @@
 import CardList from '../card-list/card-list';
 
-type PlaceCardProps = {
+type MainScreenProps = {
   placesCount: number,
+  cardCount: number
 }
 
-function MainScreen({ placesCount }: PlaceCardProps): JSX.Element {
+function MainScreen({ placesCount, cardCount }: MainScreenProps): JSX.Element {
   return (
     <main className="page__main page__main--index">
       <h1 className="visually-hidden">Cities</h1>
@@ -64,7 +65,7 @@ function MainScreen({ placesCount }: PlaceCardProps): JSX.Element {
                 <li className="places__option" tabIndex={0}>Top rated first</li>
               </ul>
             </form>
-            <CardList />
+            <CardList cardCount={cardCount} />
           </section>
           <div className="cities__right-section">
             <section className="cities__map map"></section>
