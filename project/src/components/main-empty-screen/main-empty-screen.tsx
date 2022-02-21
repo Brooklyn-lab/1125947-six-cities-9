@@ -1,4 +1,4 @@
-import HeaderScreen from '../header-screen/header-screen';
+import Header from '../header/header';
 
 function MainEmptyScreen(): JSX.Element {
   return (
@@ -8,7 +8,7 @@ function MainEmptyScreen(): JSX.Element {
       </div>
 
       <div className="page page--gray page--main">
-        <HeaderScreen />
+        <Header />
 
         <main className="page__main page__main--index page__main--index-empty">
           <h1 className="visually-hidden">Cities</h1>

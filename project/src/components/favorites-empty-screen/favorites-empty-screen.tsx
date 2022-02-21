@@ -1,5 +1,5 @@
-import FooterScreen from '../footer-screen/footer-screen';
-import HeaderScreen from '../header-screen/header-screen';
+import Footer from '../footer/footer';
+import Header from '../header/header';
 
 function FavoritesEmptyScreen (): JSX.Element {
   return (
@@ -9,7 +9,7 @@ function FavoritesEmptyScreen (): JSX.Element {
       </div>
 
       <div className="page page--favorites-empty">
-        <HeaderScreen />
+        <Header />
 
         <main className="page__main page__main--favorites page__main--favorites-empty">
           <div className="page__favorites-container container">
@@ -23,7 +23,7 @@ function FavoritesEmptyScreen (): JSX.Element {
           </div>
         </main>
 
-        <FooterScreen />
+        <Footer />
       </div>
     </>
   );

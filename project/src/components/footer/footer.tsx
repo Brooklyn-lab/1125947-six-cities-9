@@ -1,4 +1,4 @@
-function FooterScreen(): JSX.Element {
+function Footer(): JSX.Element {
   return (
     <footer className="footer">
       <a className="footer__logo-link" href="main.html">
@@ -8,4 +8,4 @@ function FooterScreen(): JSX.Element {
   );
 }
 
-export default FooterScreen;
+export default Footer;

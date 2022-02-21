@@ -1,17 +1,11 @@
-// import MainScreen from '../main-screen/main-screen';
+import MainScreen from '../main-screen/main-screen';
 
-import LoginScreen from '../login-screen/login-screen';
+type PlaceCardProps = {
+  placesCount: number,
+}
 
-// type PlaceCardProps = {
-//   placesCount: number,
-// }
-
-// function App({placesCount}: PlaceCardProps): JSX.Element {
-//   return <MainScreen placesCount={placesCount} />;
-// }
-
-function App(): JSX.Element {
-  return <LoginScreen />;
+function App({ placesCount }: PlaceCardProps): JSX.Element {
+  return <MainScreen placesCount={placesCount} />;
 }
 
 export default App;

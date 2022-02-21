@@ -1,10 +1,10 @@
-import PlaceCardTemplate from '../place-card-template/place-card-template';
+import CardList from '../card-list/card-list';
 
 type PlaceCardProps = {
   placesCount: number,
 }
 
-function MainScreen({placesCount}: PlaceCardProps): JSX.Element {
+function MainScreen({ placesCount }: PlaceCardProps): JSX.Element {
   return (
     <main className="page__main page__main--index">
       <h1 className="visually-hidden">Cities</h1>
@@ -64,13 +64,7 @@ function MainScreen({placesCount}: PlaceCardProps): JSX.Element {
                 <li className="places__option" tabIndex={0}>Top rated first</li>
               </ul>
             </form>
-            <div className="cities__places-list places__list tabs__content">
-              <PlaceCardTemplate />
-              <PlaceCardTemplate />
-              <PlaceCardTemplate />
-              <PlaceCardTemplate />
-              <PlaceCardTemplate />
-            </div>
+            <CardList />
           </section>
           <div className="cities__right-section">
             <section className="cities__map map"></section>

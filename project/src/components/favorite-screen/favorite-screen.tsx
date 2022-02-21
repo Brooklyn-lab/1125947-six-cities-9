@@ -1,10 +1,10 @@
-import FooterScreen from '../footer-screen/footer-screen';
-import HeaderScreen from '../header-screen/header-screen';
+import Footer from '../footer/footer';
+import Header from '../header/header';
 
 function FavoriteScreen (): JSX.Element {
   return (
     <>
-      <HeaderScreen />
+      <Header />
 
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
@@ -136,7 +136,7 @@ function FavoriteScreen (): JSX.Element {
         </div>
       </main>
 
-      <FooterScreen />
+      <Footer />
     </>
   );
 }
