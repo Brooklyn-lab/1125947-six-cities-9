@@ -4,7 +4,8 @@ import FavoriteScreen from '../favorite-screen/favorite-screen';
 import LoginScreen from '../login-screen/login-screen';
 import MainScreen from '../main-screen/main-screen';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
-import PrivatRoute from '../private-route/private-route';
+import PrivateRoute from '../private-route/private-route';
+import PropertyScreen from '../property-screen/property-screen';
 
 type AppProps = {
   placesCount: number,
@@ -26,15 +27,24 @@ function App({ placesCount, cardCount }: AppProps): JSX.Element {
         <Route
           path={AppRoute.Favorites}
           element={
-            <PrivatRoute authorizationStatus={AuthorizationStatus.NoAuth}>
+            <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
               <FavoriteScreen />
-            </PrivatRoute>
+            </PrivateRoute>
           }
         />
         <Route
           path={AppRoute.Room}
-          element={<LoginScreen />}
-        />
+          element={
+            <PropertyScreen />
+          }
+        >
+          <Route
+            path=':id'
+            element={
+              <PropertyScreen />
+            }
+          />
+        </Route>
         <Route
           path='*'
           element={<NotFoundScreen />}
