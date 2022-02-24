@@ -34,17 +34,8 @@ function App({ placesCount, cardCount }: AppProps): JSX.Element {
         />
         <Route
           path={AppRoute.Room}
-          element={
-            <PropertyScreen />
-          }
-        >
-          <Route
-            path=':id'
-            element={
-              <PropertyScreen />
-            }
-          />
-        </Route>
+          element={<PropertyScreen />}
+        />
         <Route
           path='*'
           element={<NotFoundScreen />}
