@@ -9,4 +9,4 @@ export function getListCity(offers: Offer[]) {
   const listCity = Array.from(new Set(allCities));
 
   return listCity;
-};
+}

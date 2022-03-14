@@ -189,3 +189,4 @@ export const offers: Offer[] = [
     'type': 'apartment',
   },
 ];
+
