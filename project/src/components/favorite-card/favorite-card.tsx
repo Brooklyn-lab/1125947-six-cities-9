@@ -4,11 +4,11 @@ import { AppRoute } from '../../const';
 import { Offer } from '../../types/offers';
 import { getRating, textToUpperCase } from '../../utils/utils';
 
-type CardProp = {
+type FavoriteCardProp = {
   offer: Offer
 }
 
-function Card({ offer }: CardProp): JSX.Element {
+function FavoriteCard({ offer }: FavoriteCardProp): JSX.Element {
   const { previewImage, price, rating, title, type, id, isPremium } = offer;
 
   const [activeCard, setActiveCard] = useState(0);
@@ -18,29 +18,29 @@ function Card({ offer }: CardProp): JSX.Element {
   };
 
   return (
-    <article className="cities__place-card place-card" onMouseEnter={onMouseEnterHandler}>
+    <article className="favorites__card place-card" onMouseEnter={onMouseEnterHandler}>
       {
         isPremium &&
         <div className="place-card__mark">
           <span>Premium</span>
         </div>
       }
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className="favorites__image-wrapper place-card__image-wrapper">
         <Link to={generatePath(AppRoute.Room, { id: String(activeCard) })}>
           <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image" />
         </Link>
       </div>
-      <div className="place-card__info">
+      <div className="favorites__card-info place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className="place-card__bookmark-button button" type="button">
+          <button className="place-card__bookmark-button place-card__bookmark-button--active button" type="button">
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
-            <span className="visually-hidden">To bookmarks</span>
+            <span className="visually-hidden">In bookmarks</span>
           </button>
         </div>
         <div className="place-card__rating rating">
@@ -60,4 +60,4 @@ function Card({ offer }: CardProp): JSX.Element {
   );
 }
 
-export default Card;
+export default FavoriteCard;

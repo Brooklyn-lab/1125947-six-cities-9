@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
+import { Offer } from '../../types/offers';
 import FavoriteScreen from '../favorite-screen/favorite-screen';
 import LoginScreen from '../login-screen/login-screen';
 import MainScreen from '../main-screen/main-screen';
@@ -9,16 +10,17 @@ import PropertyScreen from '../property-screen/property-screen';
 
 type AppProps = {
   placesCount: number,
-  cardCount: number
+  offers: Offer[],
+  favoriteOffers: Offer[]
 }
 
-function App({ placesCount, cardCount }: AppProps): JSX.Element {
+function App({ placesCount, offers, favoriteOffers }: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Main}
-          element={<MainScreen placesCount={placesCount} cardCount={cardCount} />}
+          element={<MainScreen placesCount={placesCount} offers={offers} />}
         />
         <Route
           path={AppRoute.SignIn}
@@ -27,14 +29,14 @@ function App({ placesCount, cardCount }: AppProps): JSX.Element {
         <Route
           path={AppRoute.Favorites}
           element={
-            <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
-              <FavoriteScreen />
+            <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+              <FavoriteScreen favoriteOffers={favoriteOffers} />
             </PrivateRoute>
           }
         />
         <Route
           path={AppRoute.Room}
-          element={<PropertyScreen />}
+          element={<PropertyScreen offers={offers} />}
         />
         <Route
           path='*'
