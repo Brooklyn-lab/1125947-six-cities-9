@@ -1,5 +1,8 @@
 import { Offer } from '../../types/offers';
 import CardList from '../card-list/card-list';
+import Map from '../map/map';
+import { CITY } from '../../mocks/city';
+import { POINTS } from '../../mocks/points';
 
 type MainScreenProps = {
   placesCount: number,
@@ -69,7 +72,7 @@ function MainScreen({ placesCount, offers }: MainScreenProps): JSX.Element {
             <CardList offers={offers} />
           </section>
           <div className="cities__right-section">
-            <section className="cities__map map"></section>
+            <Map city={CITY} points={POINTS} />
           </div>
         </div>
       </div>
