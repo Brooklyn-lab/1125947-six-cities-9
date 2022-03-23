@@ -5,27 +5,43 @@ import { Offer } from '../../types/offers';
 import { getRating, textToUpperCase } from '../../utils/utils';
 
 type CardProp = {
-  offer: Offer
+  offer: Offer,
+  namePage: 'MainPage' | 'PropertyPage'
 }
 
-function Card({ offer }: CardProp): JSX.Element {
+function Card({ offer, namePage }: CardProp): JSX.Element {
   const { previewImage, price, rating, title, type, id, isPremium } = offer;
-
   const [activeCard, setActiveCard] = useState(0);
+
+  function cardWrapperClasses() {
+    if (namePage === 'MainPage') {
+      return 'cities__place-card';
+    } else if (namePage === 'PropertyPage') {
+      return 'near-places__card';
+    }
+  }
+
+  function cardImageWrapperClasses() {
+    if (namePage === 'MainPage') {
+      return 'cities-places__image-wrapper';
+    } else if (namePage === 'PropertyPage') {
+      return 'near-places__image-wrapper';
+    }
+  }
 
   const onMouseEnterHandler = () => {
     setActiveCard(id);
   };
 
   return (
-    <article className="cities__place-card place-card" onMouseEnter={onMouseEnterHandler}>
+    <article className={`${cardWrapperClasses()} place-card`} onMouseEnter={onMouseEnterHandler}>
       {
         isPremium &&
         <div className="place-card__mark">
           <span>Premium</span>
         </div>
       }
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className={`${cardImageWrapperClasses()} place-card__image-wrapper`} >
         <Link to={generatePath(AppRoute.Room, { id: String(activeCard) })}>
           <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image" />
         </Link>
