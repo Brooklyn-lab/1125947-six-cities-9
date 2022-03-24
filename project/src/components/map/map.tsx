@@ -5,9 +5,15 @@ import leaflet, { Marker } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { URL_MARKER_DEFAULT } from '../../const';
 
+enum MapContainer {
+  MainPage = 'cities__map',
+  PropertyPage = 'property__map',
+}
+
 type MapProps = {
   city: City,
-  points: Points[]
+  points: Points[],
+  namePage: 'MainPage' | 'PropertyPage'
 }
 
 const defaultCustomIcon = leaflet.icon({
@@ -16,9 +22,11 @@ const defaultCustomIcon = leaflet.icon({
   iconAnchor: [20, 40],
 });
 
-function Map({ city, points }: MapProps) {
+function Map({ city, points, namePage }: MapProps) {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
+
+  const currentClassName = MapContainer[namePage];
 
   useEffect(() => {
     if (map) {
@@ -37,7 +45,7 @@ function Map({ city, points }: MapProps) {
   }, [map, city]);
 
   return (
-    <section className="cities__map map" ref={mapRef}></section>
+    <section className={`${currentClassName} map`} ref={mapRef}></section>
   );
 }
 

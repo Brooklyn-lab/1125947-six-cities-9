@@ -69,10 +69,10 @@ function MainScreen({ placesCount, offers }: MainScreenProps): JSX.Element {
                 <li className="places__option" tabIndex={0}>Top rated first</li>
               </ul>
             </form>
-            <CardList offers={offers} />
+            <CardList offers={offers} namePage='MainPage' />
           </section>
           <div className="cities__right-section">
-            <Map city={CITY} points={POINTS} />
+            <Map city={CITY} points={POINTS} namePage='MainPage' />
           </div>
         </div>
       </div>

@@ -2,13 +2,21 @@ import { Offer } from '../../types/offers';
 import Card from '../card/card';
 
 type CardListProp = {
-  offers: Offer[]
+  offers: Offer[],
+  namePage: 'MainPage' | 'PropertyPage'
 }
 
-function CardList({ offers }: CardListProp): JSX.Element {
+enum CardListContainer {
+  MainPage = 'cities__places-list tabs__content',
+  PropertyPage = 'near-places__list',
+}
+
+function CardList({ offers, namePage }: CardListProp): JSX.Element {
+  const currentClassName = CardListContainer[namePage];
+
   return (
-    <div className="cities__places-list places__list tabs__content">
-      {offers.map((offer) => <Card key={offer.id} offer={offer} />)}
+    <div className={`${currentClassName} places__list`}>
+      {offers.map((offer) => <Card key={offer.id} offer={offer} namePage={namePage} />)}
     </div>
   );
 }
