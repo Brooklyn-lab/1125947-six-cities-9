@@ -1,16 +1,33 @@
-import { createReducer, PayloadAction } from '@reduxjs/toolkit';
-import { changeCity } from './action';
+import { createReducer } from '@reduxjs/toolkit';
+import { addOffers, changeCity } from './action';
 import { offers } from '../mocks/offers';
+import { LOCATION } from '../const';
+import { Offer } from '../types/offers';
 
-const initialState = {
-  city: 'Amsterdam',
+interface currentOffers {
+  currentCity: string,
+  currentOffers: Offer[],
+  offers: Offer[],
+}
+
+const initialState: currentOffers = {
+  currentCity: LOCATION[0],
+  currentOffers: [],
   offers,
 };
 
 const reducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(changeCity, (state, action: PayloadAction<string>) => {
-      console.log(state, action.payload);
+    .addCase(changeCity, (state, action) => {
+      state.currentCity = action.payload;
+    })
+    .addCase(addOffers, (state) => {
+      state.currentOffers = [];
+      state.offers.find((offer) => {
+        if (offer.city.name === state.currentCity) {
+          state.currentOffers.push(offer);
+        }
+      });
     });
 });
 

@@ -5,9 +5,8 @@ export type Points = {
   zoom: number
 }
 
-export type City = {
-  title: string,
-  lat: number,
-  lng: number,
-  zoom: number
+export type Location = {
+  latitude: number,
+  longitude: number,
+  zoom: number,
 }

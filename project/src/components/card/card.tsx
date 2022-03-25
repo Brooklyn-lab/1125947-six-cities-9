@@ -5,22 +5,32 @@ import { Offer } from '../../types/offers';
 import { getRating, textToUpperCase } from '../../utils/utils';
 
 type CardProp = {
-  offer: Offer,
+  offer: Offer
+  hoverCarOnList?: (placeId: number) => void
   namePage: 'MainPage' | 'PropertyPage'
 }
 
-function Card({ offer, namePage }: CardProp): JSX.Element {
+function Card({ offer, hoverCarOnList, namePage }: CardProp): JSX.Element {
   const { previewImage, price, rating, title, type, id, isPremium } = offer;
-  const [activeCard, setActiveCard] = useState(0);
+  const [mouseOver, setMouseOver] = useState(-1);
 
   const isMainPage = namePage === 'MainPage';
 
-  const onMouseEnterHandler = () => {
-    setActiveCard(id);
+  const mouseOverHandler = () => {
+    setMouseOver(id);
+    if (hoverCarOnList) {
+      hoverCarOnList(id);
+    }
+  };
+  const mouseOutHandler = () => {
+    setMouseOver(-1);
+    if (hoverCarOnList) {
+      hoverCarOnList(-1);
+    }
   };
 
   return (
-    <article className={`${isMainPage ? 'cities__place-card' : 'near-places__card'} place-card`} onMouseEnter={onMouseEnterHandler}>
+    <article className={`${isMainPage ? 'cities__place-card' : 'near-places__card'} place-card`} onMouseOver={mouseOverHandler} onMouseOut={mouseOutHandler}>
       {
         isPremium &&
         <div className="place-card__mark">
@@ -28,7 +38,7 @@ function Card({ offer, namePage }: CardProp): JSX.Element {
         </div>
       }
       <div className={`${isMainPage ? 'cities-places__image-wrapper' : 'near-places__image-wrapper'} place-card__image-wrapper`} >
-        <Link to={generatePath(AppRoute.Room, { id: String(activeCard) })}>
+        <Link to={generatePath(AppRoute.Room, { id: String(mouseOver) })}>
           <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image" />
         </Link>
       </div>
@@ -52,7 +62,7 @@ function Card({ offer, namePage }: CardProp): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={generatePath(AppRoute.Room, { id: String(activeCard) })}>
+          <Link to={generatePath(AppRoute.Room, { id: String(mouseOver) })}>
             {title}
           </Link>
         </h2>

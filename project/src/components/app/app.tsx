@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
+import { useAppSelector } from '../../hooks';
 import { Offer } from '../../types/offers';
 import FavoriteScreen from '../favorite-screen/favorite-screen';
 import LoginScreen from '../login-screen/login-screen';
@@ -9,18 +10,18 @@ import PrivateRoute from '../private-route/private-route';
 import PropertyScreen from '../property-screen/property-screen';
 
 type AppProps = {
-  placesCount: number,
-  offers: Offer[],
   favoriteOffers: Offer[]
 }
 
-function App({ placesCount, offers, favoriteOffers }: AppProps): JSX.Element {
+function App({ favoriteOffers }: AppProps): JSX.Element {
+  const { offers } = useAppSelector((state) => state);
+
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Main}
-          element={<MainScreen placesCount={placesCount} offers={offers} />}
+          element={<MainScreen />}
         />
         <Route
           path={AppRoute.SignIn}
