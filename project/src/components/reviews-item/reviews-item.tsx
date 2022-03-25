@@ -1,8 +1,8 @@
-import { Reviews } from '../../types/reviews';
+import { Review } from '../../types/review';
 import { getRating, getMonth } from '../../utils/utils';
 
 type ReviewsItemProps = {
-  review: Reviews
+  review: Review
 }
 
 function ReviewsItem({ review }: ReviewsItemProps): JSX.Element {
@@ -27,7 +27,7 @@ function ReviewsItem({ review }: ReviewsItemProps): JSX.Element {
         <p className="reviews__text">
           {review.comment}
         </p>
-        <time className="reviews__time" dateTime={review.date}>{getMonth(review.date)}</time>
+        <time className="reviews__time" dateTime={review.date.toLocaleDateString()}>{getMonth(review.date)}</time>
       </div>
     </li>
   );

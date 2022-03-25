@@ -1,5 +1,4 @@
 import { Offer } from '../types/offers';
-import { MONTHS } from '../const';
 
 export const getRating = ((rating: number) => `${rating * 100 / 5}%`);
 
@@ -12,15 +11,4 @@ export function getListCity(offers: Offer[]) {
   return listCity;
 }
 
-export const getMonth = ((date: string) => {
-  const month = Number(date.slice(5, 7));
-  let currentDate = '';
-
-  MONTHS.map((item, index) => {
-    if ((month - 1) === index) {
-      currentDate = item;
-    }
-  });
-
-  return `${currentDate} ${date.slice(0, 4)}`;
-});
+export const getMonth = ((date: Date) => `${date.toLocaleString('EN', { month: 'long' })} ${date.getFullYear()}`);

@@ -13,35 +13,21 @@ function Card({ offer, namePage }: CardProp): JSX.Element {
   const { previewImage, price, rating, title, type, id, isPremium } = offer;
   const [activeCard, setActiveCard] = useState(0);
 
-  function cardWrapperClasses() {
-    if (namePage === 'MainPage') {
-      return 'cities__place-card';
-    } else if (namePage === 'PropertyPage') {
-      return 'near-places__card';
-    }
-  }
-
-  function cardImageWrapperClasses() {
-    if (namePage === 'MainPage') {
-      return 'cities-places__image-wrapper';
-    } else if (namePage === 'PropertyPage') {
-      return 'near-places__image-wrapper';
-    }
-  }
+  const isMainPage = namePage === 'MainPage';
 
   const onMouseEnterHandler = () => {
     setActiveCard(id);
   };
 
   return (
-    <article className={`${cardWrapperClasses()} place-card`} onMouseEnter={onMouseEnterHandler}>
+    <article className={`${isMainPage ? 'cities__place-card' : 'near-places__card'} place-card`} onMouseEnter={onMouseEnterHandler}>
       {
         isPremium &&
         <div className="place-card__mark">
           <span>Premium</span>
         </div>
       }
-      <div className={`${cardImageWrapperClasses()} place-card__image-wrapper`} >
+      <div className={`${isMainPage ? 'cities-places__image-wrapper' : 'near-places__image-wrapper'} place-card__image-wrapper`} >
         <Link to={generatePath(AppRoute.Room, { id: String(activeCard) })}>
           <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image" />
         </Link>

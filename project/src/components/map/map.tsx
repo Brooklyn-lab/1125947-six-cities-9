@@ -5,11 +5,6 @@ import leaflet, { Marker } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { URL_MARKER_DEFAULT } from '../../const';
 
-enum MapContainer {
-  MainPage = 'cities__map',
-  PropertyPage = 'property__map',
-}
-
 type MapProps = {
   city: City,
   points: Points[],
@@ -26,7 +21,7 @@ function Map({ city, points, namePage }: MapProps) {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
-  const currentClassName = MapContainer[namePage];
+  const isMainPage = namePage === 'MainPage';
 
   useEffect(() => {
     if (map) {
@@ -45,7 +40,7 @@ function Map({ city, points, namePage }: MapProps) {
   }, [map, city]);
 
   return (
-    <section className={`${currentClassName} map`} ref={mapRef}></section>
+    <section className={`${isMainPage ? 'cities__map' : 'property__map'} map`} ref={mapRef}></section>
   );
 }
 
