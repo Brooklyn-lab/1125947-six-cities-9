@@ -1,48 +1,33 @@
-import { useState } from 'react';
 import { generatePath, Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { Offer } from '../../types/offers';
 import { getRating, textToUpperCase } from '../../utils/utils';
 
 type CardProp = {
-  offer: Offer,
+  offer: Offer
   namePage: 'MainPage' | 'PropertyPage'
+}
+
+enum CurrentCity {
+  'MainPage' = 'cities',
+  'PropertyPage' = 'near'
 }
 
 function Card({ offer, namePage }: CardProp): JSX.Element {
   const { previewImage, price, rating, title, type, id, isPremium } = offer;
-  const [activeCard, setActiveCard] = useState(0);
 
-  function cardWrapperClasses() {
-    if (namePage === 'MainPage') {
-      return 'cities__place-card';
-    } else if (namePage === 'PropertyPage') {
-      return 'near-places__card';
-    }
-  }
-
-  function cardImageWrapperClasses() {
-    if (namePage === 'MainPage') {
-      return 'cities-places__image-wrapper';
-    } else if (namePage === 'PropertyPage') {
-      return 'near-places__image-wrapper';
-    }
-  }
-
-  const onMouseEnterHandler = () => {
-    setActiveCard(id);
-  };
+  const isCurrentPage = CurrentCity[namePage];
 
   return (
-    <article className={`${cardWrapperClasses()} place-card`} onMouseEnter={onMouseEnterHandler}>
+    <article className={`${isCurrentPage}__place-card place-card`} >
       {
         isPremium &&
         <div className="place-card__mark">
           <span>Premium</span>
         </div>
       }
-      <div className={`${cardImageWrapperClasses()} place-card__image-wrapper`} >
-        <Link to={generatePath(AppRoute.Room, { id: String(activeCard) })}>
+      <div className={`${isCurrentPage}-places__image-wrapper place-card__image-wrapper`} >
+        <Link to={generatePath(AppRoute.Room, { id: String(id) })}>
           <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image" />
         </Link>
       </div>
@@ -66,7 +51,7 @@ function Card({ offer, namePage }: CardProp): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={generatePath(AppRoute.Room, { id: String(activeCard) })}>
+          <Link to={generatePath(AppRoute.Room, { id: String(id) })}>
             {title}
           </Link>
         </h2>

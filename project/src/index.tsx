@@ -1,19 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
 import App from './components/app/app';
-import { offers } from './mocks/offers';
 import { favoriteOffers } from './mocks/favoriteOffers';
-
-const CardInfo = {
-  placesCount: 312,
-};
+import { store } from './store';
+import { offers } from './mocks/offers';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App
-      placesCount={CardInfo.placesCount}
-      offers={offers}
-      favoriteOffers={favoriteOffers}
-    />
+    <Provider store={store}>
+      <App
+        favoriteOffers={favoriteOffers}
+        offers={offers}
+      />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root'));

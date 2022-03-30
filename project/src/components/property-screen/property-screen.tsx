@@ -1,18 +1,13 @@
-import { Offer } from '../../types/offers';
 import CommentForm from '../comment-form/comment-form';
 import HeaderScreen from '../header/header';
 import ReviewsList from '../reviews-list/reviews-list';
 import { REVIEWS } from '../../mocks/reviews';
 import Map from '../map/map';
-import { CITY } from '../../mocks/city';
-import { POINTS } from '../../mocks/points';
 import CardList from '../card-list/card-list';
+import { useAppSelector } from '../../hooks';
 
-type PropertyScreenProp = {
-  offers: Offer[]
-}
-
-function PropertyScreen({ offers }: PropertyScreenProp): JSX.Element {
+function PropertyScreen(): JSX.Element {
+  const { currentCity, offersInCity } = useAppSelector((state) => state);
 
   return (
     <div className="page">
@@ -144,12 +139,12 @@ function PropertyScreen({ offers }: PropertyScreenProp): JSX.Element {
               </section>
             </div>
           </div>
-          <Map city={CITY} points={POINTS} namePage='PropertyPage' />
+          <Map location={currentCity.location} points={offersInCity} namePage='PropertyPage' />
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <CardList offers={offers} namePage='PropertyPage' />
+            <CardList offers={offersInCity} namePage='PropertyPage' />
           </section>
         </div>
       </main>
