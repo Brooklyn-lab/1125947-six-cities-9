@@ -1,6 +1,8 @@
+import { useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { addOffers, changeCity } from '../../store/action';
 import { Offer } from '../../types/offers';
 import FavoriteScreen from '../favorite-screen/favorite-screen';
 import LoginScreen from '../login-screen/login-screen';
@@ -11,10 +13,20 @@ import PropertyScreen from '../property-screen/property-screen';
 
 type AppProps = {
   favoriteOffers: Offer[]
+  offers: Offer[]
 }
 
-function App({ favoriteOffers }: AppProps): JSX.Element {
-  const { offers } = useAppSelector((state) => state);
+function App({ favoriteOffers, offers }: AppProps): JSX.Element {
+  const dispatch = useAppDispatch();
+  const { currentCity } = useAppSelector((state) => state);
+
+  useEffect(() => {
+    dispatch(addOffers(offers));
+  }, [offers, dispatch]);
+
+  useEffect(() => {
+    dispatch(changeCity(currentCity.name));
+  }, [dispatch, currentCity.name]);
 
   return (
     <BrowserRouter>
@@ -37,7 +49,7 @@ function App({ favoriteOffers }: AppProps): JSX.Element {
         />
         <Route
           path={AppRoute.Room}
-          element={<PropertyScreen offers={offers} />}
+          element={<PropertyScreen />}
         />
         <Route
           path='*'

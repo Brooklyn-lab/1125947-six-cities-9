@@ -5,19 +5,9 @@ import { REVIEWS } from '../../mocks/reviews';
 import Map from '../map/map';
 import CardList from '../card-list/card-list';
 import { useAppSelector } from '../../hooks';
-import { Offer } from '../../types/offers';
 
-type PropertyScreenProps = {
-  offers: Offer[]
-}
-
-function PropertyScreen({ offers }: PropertyScreenProps): JSX.Element {
-  const { currentCity } = useAppSelector((state) => state);
-
-  const currentCityIndex = offers.findIndex((offer) => offer.city.name === currentCity);
-  const cityLocation = offers[currentCityIndex];
-
-  const offersInCity = offers.filter((offer) => offer.city.name === currentCity);
+function PropertyScreen(): JSX.Element {
+  const { currentCity, offersInCity } = useAppSelector((state) => state);
 
   return (
     <div className="page">
@@ -149,7 +139,7 @@ function PropertyScreen({ offers }: PropertyScreenProps): JSX.Element {
               </section>
             </div>
           </div>
-          <Map location={cityLocation.city.location} points={offersInCity} namePage='PropertyPage' />
+          <Map location={currentCity.location} points={offersInCity} namePage='PropertyPage' />
         </section>
         <div className="container">
           <section className="near-places places">

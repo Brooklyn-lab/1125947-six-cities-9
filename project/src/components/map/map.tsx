@@ -1,5 +1,5 @@
 import { useRef, useEffect } from 'react';
-import { Location } from '../../types/points';
+import { Location } from '../../types/offers';
 import useMap from '../../hooks/useMap';
 import leaflet, { Marker } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -9,7 +9,6 @@ import { Offer } from '../../types/offers';
 type MapProps = {
   location: Location
   points: Offer[]
-  selectedPoint?: Offer | undefined
   namePage: 'MainPage' | 'PropertyPage'
 }
 
@@ -19,7 +18,7 @@ const defaultCustomIcon = leaflet.icon({
   iconAnchor: [20, 40],
 });
 
-function Map({ location, points, selectedPoint, namePage }: MapProps) {
+function Map({ location, points, namePage }: MapProps) {
   const mapRef = useRef(null);
   const map = useMap(mapRef, location);
 
@@ -39,7 +38,7 @@ function Map({ location, points, selectedPoint, namePage }: MapProps) {
           .addTo(map);
       });
     }
-  }, [map, location, points, selectedPoint]);
+  }, [map, points]);
 
   return (
     <section className={`${isMainPage ? 'cities__map' : 'property__map'} map`} ref={mapRef}></section>

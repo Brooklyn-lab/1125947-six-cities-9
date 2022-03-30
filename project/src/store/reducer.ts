@@ -1,31 +1,41 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { addOffers, changeCity } from './action';
-import { offers } from '../mocks/offers';
-import { LOCATION } from '../const';
 import { Offer } from '../types/offers';
+import { City } from '../types/offers';
 
-interface currentOffers {
-  currentCity: string,
-  currentOffers: Offer[],
+interface selectedCity {
+  currentCity: City,
+  offersInCity: Offer[],
   offers: Offer[],
+  isLoading: boolean,
 }
 
-const initialState: currentOffers = {
-  currentCity: LOCATION[0],
-  currentOffers: [],
-  offers,
+const initialState: selectedCity = {
+  currentCity: {
+    location: {
+      latitude: 52.3909553943508,
+      longitude: 4.85309666406198,
+      zoom: 11,
+    },
+    name: 'Paris',
+  },
+  offersInCity: [],
+  offers: [],
+  isLoading: false,
 };
 
 const reducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(changeCity, (state, action) => {
-      state.currentCity = action.payload;
+    .addCase(addOffers, (state, action) => {
+      state.offers = action.payload;
     })
-    .addCase(addOffers, (state) => {
-      state.currentOffers = [];
-      state.offers.find((offer) => {
-        if (offer.city.name === state.currentCity) {
-          state.currentOffers.push(offer);
+    .addCase(changeCity, (state, action) => {
+      state.offersInCity = [];
+      state.offers.forEach((offer) => {
+        if (offer.city.name === action.payload) {
+          state.currentCity = offer.city;
+          state.offersInCity.push(offer);
+          state.isLoading = true;
         }
       });
     });

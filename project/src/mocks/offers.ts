@@ -98,9 +98,9 @@ export const offers: Offer[] = [
     'bedrooms': 1,
     'city': {
       'location': {
-        'latitude': 57.25554645,
-        'longitude': 5.33434555,
-        'zoom': 7,
+        'latitude': 53.5753,
+        'longitude': 10.0153,
+        'zoom': 12,
       },
       'name': 'Hamburg',
     },
@@ -130,8 +130,8 @@ export const offers: Offer[] = [
     'isFavorite': false,
     'isPremium': false,
     'location': {
-      'latitude': 61.214555434,
-      'longitude': 7.232355655,
+      'latitude': 53.5753,
+      'longitude': 10.0153,
       'zoom': 9,
     },
     'maxAdults': 2,
