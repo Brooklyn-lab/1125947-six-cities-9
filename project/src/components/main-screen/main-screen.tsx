@@ -3,9 +3,26 @@ import Map from '../map/map';
 import CityList from '../citys/citys';
 import { useAppSelector } from '../../hooks';
 import EmptyListScreen from '../empty-list-screen/empty-list-screen';
+import SortForm from '../sortform/sort-form';
+import { useEffect, useState } from 'react';
+import { Offer } from '../../types/offers';
 
 function MainScreen(): JSX.Element {
   const { currentCity, offersInCity } = useAppSelector((state) => state);
+  const [activeCard, setActiveCard] = useState(-1);
+  const [selectedCard, setSelectedCard] = useState<Offer | undefined>(undefined);
+
+  const onHoverHandler = (locationId: number) => setActiveCard(locationId);
+
+  useEffect(() => {
+    offersInCity.find((offer) => {
+      if (offer.id === activeCard) {
+        setSelectedCard(offer);
+      } else if (activeCard === -1) {
+        setSelectedCard(undefined);
+      }
+    });
+  }, [activeCard, selectedCard]);
 
   return (
     <main className="page__main page__main--index">
@@ -19,25 +36,11 @@ function MainScreen(): JSX.Element {
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{offersInCity.length} places to stay in {currentCity.name}</b>
-              <form className="places__sorting" action="#" method="get">
-                <span className="places__sorting-caption">Sort by</span>
-                <span className="places__sorting-type" tabIndex={0}>
-                  Popular
-                  <svg className="places__sorting-arrow" width="7" height="4">
-                    <use xlinkHref="#icon-arrow-select"></use>
-                  </svg>
-                </span>
-                <ul className="places__options places__options--custom places__options--opened">
-                  <li className="places__option places__option--active" tabIndex={0}>Popular</li>
-                  <li className="places__option" tabIndex={0}>Price: low to high</li>
-                  <li className="places__option" tabIndex={0}>Price: high to low</li>
-                  <li className="places__option" tabIndex={0}>Top rated first</li>
-                </ul>
-              </form>
-              <CardList offers={offersInCity} namePage='MainPage' />
+              <SortForm />
+              <CardList offers={offersInCity} onHoverHandler={onHoverHandler} namePage='MainPage' />
             </section>
             <div className="cities__right-section">
-              <Map location={currentCity.location} points={offersInCity} namePage='MainPage' />
+              <Map location={currentCity.location} points={offersInCity} namePage='MainPage' selectedCard={selectedCard} />
             </div>
           </div>}
       </div>

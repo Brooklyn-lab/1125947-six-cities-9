@@ -6,6 +6,7 @@ import { getRating, textToUpperCase } from '../../utils/utils';
 type CardProp = {
   offer: Offer
   namePage: 'MainPage' | 'PropertyPage'
+  onHoverHandler?: (locationId: number) => void
 }
 
 enum CurrentCity {
@@ -13,13 +14,25 @@ enum CurrentCity {
   'PropertyPage' = 'near'
 }
 
-function Card({ offer, namePage }: CardProp): JSX.Element {
+function Card({ offer, namePage, onHoverHandler }: CardProp): JSX.Element {
   const { previewImage, price, rating, title, type, id, isPremium } = offer;
 
   const isCurrentPage = CurrentCity[namePage];
 
+  const onMouseOverHandler = () => {
+    if (onHoverHandler) {
+      onHoverHandler(id);
+    }
+  };
+
+  const onMouseLeaveHandler = () => {
+    if (onHoverHandler) {
+      onHoverHandler(-1);
+    }
+  };
+
   return (
-    <article className={`${isCurrentPage}__place-card place-card`} >
+    <article className={`${isCurrentPage}__place-card place-card`} onMouseOver={onMouseOverHandler} onMouseOut={onMouseLeaveHandler} >
       {
         isPremium &&
         <div className="place-card__mark">
