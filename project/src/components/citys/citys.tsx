@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { LOCATIONS } from '../../const';
 import { useAppDispatch } from '../../hooks';
 import { changeCity } from '../../store/action';
@@ -8,6 +9,7 @@ type CityListProps = {
 
 function CityList({ currentCity }: CityListProps): JSX.Element {
   const dispatch = useAppDispatch();
+  const [activeLocation, setActiveLocation] = useState(currentCity);
 
   return (
     <div className="tabs">
@@ -19,9 +21,10 @@ function CityList({ currentCity }: CityListProps): JSX.Element {
                 key={locationItem}
                 onClick={() => {
                   dispatch(changeCity(locationItem));
+                  setActiveLocation(locationItem);
                 }}
               >
-                <div className={`locations__item-link tabs__item ${(currentCity === locationItem) ? 'tabs__item--active' : ' '}`}>
+                <div className={`locations__item-link tabs__item ${(activeLocation === locationItem) ? 'tabs__item--active' : ' '}`}>
                   <span>{locationItem}</span>
                 </div>
               </li>

@@ -1,16 +1,17 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { addOffers, changeCity } from './action';
+import { addOffers, changeCity, changeSortOffersType } from './action';
 import { Offer } from '../types/offers';
 import { City } from '../types/offers';
+import { typeSort } from '../const';
 
-interface selectedCity {
+interface InitialState {
   currentCity: City,
   offersInCity: Offer[],
   offers: Offer[],
-  isLoading: boolean,
+  sortOfferType: string,
 }
 
-const initialState: selectedCity = {
+const initialState: InitialState = {
   currentCity: {
     location: {
       latitude: 52.3909553943508,
@@ -21,7 +22,7 @@ const initialState: selectedCity = {
   },
   offersInCity: [],
   offers: [],
-  isLoading: false,
+  sortOfferType: typeSort.Popular,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -31,13 +32,26 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(changeCity, (state, action) => {
       state.offersInCity = [];
-      state.offers.forEach((offer) => {
-        if (offer.city.name === action.payload) {
-          state.currentCity = offer.city;
-          state.offersInCity.push(offer);
-          state.isLoading = true;
-        }
-      });
+      state.offers.find((offer) => (offer.city.name === action.payload) ? state.currentCity = offer.city : null);
+      state.offers.filter((offer) => (offer.city.name === action.payload) ? state.offersInCity.push(offer) : []);
+    })
+    .addCase(changeSortOffersType, (state, action) => {
+      state.sortOfferType = action.payload;
+
+      switch (action.payload) {
+        case typeSort.Popular:
+          state.offersInCity = state.offersInCity.sort((offerA, offerB) => (offerA.id - offerB.id));
+          break;
+        case typeSort.PriceUp:
+          state.offersInCity = state.offersInCity.sort((offerA, offerB) => (offerA.price - offerB.price));
+          break;
+        case typeSort.PriceDown:
+          state.offersInCity = state.offersInCity.sort((offerA, offerB) => (offerB.price - offerA.price));
+          break;
+        case typeSort.Rating:
+          state.offersInCity = state.offersInCity.sort((offerA, offerB) => (offerB.rating - offerA.rating));
+          break;
+      }
     });
 });
 
