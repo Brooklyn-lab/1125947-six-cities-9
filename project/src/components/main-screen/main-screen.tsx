@@ -10,19 +10,14 @@ import { Offer } from '../../types/offers';
 function MainScreen(): JSX.Element {
   const { currentCity, offersInCity } = useAppSelector((state) => state);
   const [activeCard, setActiveCard] = useState(-1);
-  const [selectedCard, setSelectedCard] = useState<Offer | undefined>(undefined);
+  const [selectedCard, setSelectedCard] = useState<Offer | null>(null);
 
   const onHoverHandler = (locationId: number) => setActiveCard(locationId);
 
   useEffect(() => {
-    offersInCity.find((offer) => {
-      if (offer.id === activeCard) {
-        setSelectedCard(offer);
-      } else if (activeCard === -1) {
-        setSelectedCard(undefined);
-      }
-    });
-  }, [activeCard, selectedCard]);
+    const foundOffer = offersInCity.find((offer) => offer.id === activeCard);
+    setSelectedCard(foundOffer || null);
+  }, [activeCard, selectedCard, offersInCity]);
 
   return (
     <main className="page__main page__main--index">
