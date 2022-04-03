@@ -1,15 +1,12 @@
 import { useState } from 'react';
 import { LOCATIONS } from '../../const';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { changeCity } from '../../store/action';
 
-type CityListProps = {
-  currentCity: string
-}
-
-function CityList({ currentCity }: CityListProps): JSX.Element {
+function CityList(): JSX.Element {
+  const currentCity = useAppSelector((state) => state.currentCity);
   const dispatch = useAppDispatch();
-  const [activeLocation, setActiveLocation] = useState(currentCity);
+  const [activeLocation, setActiveLocation] = useState(currentCity.name);
 
   return (
     <div className="tabs">

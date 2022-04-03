@@ -1,14 +1,18 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { addOffers, changeCity, changeSortOffersType } from './action';
+import { changeCity, changeSortOffersType, getLoginName, loadFavoriteOffers, loadOffers, requireAuthorization } from './action';
 import { Offer } from '../types/offers';
 import { City } from '../types/offers';
-import { typeSort } from '../const';
+import { AuthorizationStatus, typeSort } from '../const';
 
 interface InitialState {
   currentCity: City,
   offersInCity: Offer[],
   offers: Offer[],
+  favoriteOffers: Offer[],
   sortOfferType: string,
+  authorizationStatus: string,
+  isDataLoaded: boolean,
+  userEmail: string,
 }
 
 const initialState: InitialState = {
@@ -22,13 +26,24 @@ const initialState: InitialState = {
   },
   offersInCity: [],
   offers: [],
+  favoriteOffers: [],
   sortOfferType: typeSort.Popular,
+  authorizationStatus: AuthorizationStatus.Unknown,
+  isDataLoaded: false,
+  userEmail: '',
 };
 
 const reducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(addOffers, (state, action) => {
+    .addCase(loadOffers, (state, action) => {
       state.offers = action.payload;
+      state.isDataLoaded = true;
+    })
+    .addCase(requireAuthorization, (state, action) => {
+      state.authorizationStatus = action.payload;
+    })
+    .addCase(loadFavoriteOffers, (state, action) => {
+      state.favoriteOffers = action.payload;
     })
     .addCase(changeCity, (state, action) => {
       state.offersInCity = [];
@@ -38,20 +53,27 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(changeSortOffersType, (state, action) => {
       state.sortOfferType = action.payload;
 
+      function sortOffers(offers: Offer[], sortType: 'ASC' | 'DESC', key: keyof Pick<Offer, 'id' | 'price' | 'rating'>) {
+        return offers.sort((a, b) => sortType === 'ASC' ? a[key] - b[key] : b[key] - a[key]);
+      }
+
       switch (action.payload) {
         case typeSort.Popular:
-          state.offersInCity = state.offersInCity.sort((offerA, offerB) => (offerA.id - offerB.id));
+          state.offersInCity = sortOffers(state.offersInCity, 'ASC', 'id');
           break;
         case typeSort.PriceUp:
-          state.offersInCity = state.offersInCity.sort((offerA, offerB) => (offerA.price - offerB.price));
+          state.offersInCity = sortOffers(state.offersInCity, 'ASC', 'price');
           break;
         case typeSort.PriceDown:
-          state.offersInCity = state.offersInCity.sort((offerA, offerB) => (offerB.price - offerA.price));
+          state.offersInCity = sortOffers(state.offersInCity, 'DESC', 'price');
           break;
         case typeSort.Rating:
-          state.offersInCity = state.offersInCity.sort((offerA, offerB) => (offerB.rating - offerA.rating));
+          state.offersInCity = sortOffers(state.offersInCity, 'DESC', 'rating');
           break;
       }
+    })
+    .addCase(getLoginName, (state, action) => {
+      state.userEmail = action.payload;
     });
 });
 
