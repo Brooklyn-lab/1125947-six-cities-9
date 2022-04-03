@@ -1,14 +1,12 @@
-import { Offer } from '../../types/offers';
+import { useAppSelector } from '../../hooks';
 import { getListCity } from '../../utils/utils';
 import FavoriteList from '../favorite-list/favorite-list';
 import Footer from '../footer/footer';
 import Header from '../header/header';
 
-type FavoriteScreenProp = {
-  favoriteOffers: Offer[]
-}
+function FavoriteScreen() {
+  const { favoriteOffers } = useAppSelector((state) => state);
 
-function FavoriteScreen({ favoriteOffers }: FavoriteScreenProp) {
   const listCity = getListCity(favoriteOffers);
 
   const favoritesCity = listCity.map((city) => {

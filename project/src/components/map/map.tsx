@@ -10,7 +10,7 @@ type MapProps = {
   location: Location
   points: Offer[]
   namePage: 'MainPage' | 'PropertyPage'
-  selectedCard?: Offer | undefined
+  selectedCard?: Offer | null
 }
 
 const defaultCustomIcon = leaflet.icon({
@@ -40,7 +40,7 @@ function Map({ location, points, namePage, selectedCard }: MapProps) {
         });
         marker
           .setIcon(
-            selectedCard !== undefined && point.id === selectedCard.id
+            point.id === selectedCard?.id
               ? currentCustomIcon
               : defaultCustomIcon,
           )

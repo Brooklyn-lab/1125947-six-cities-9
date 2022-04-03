@@ -1,7 +1,19 @@
-function LoginScreen():JSX.Element {
+import ClipLoader from 'react-spinners/DotLoader';
+
+const styleLoaderWrapper = {
+  'display': 'flex',
+  'alignItems': 'center',
+  'justifyContent': 'center',
+  'minHeight': '100vh',
+  'width': '100%',
+};
+
+function LoadingScreen(): JSX.Element {
   return (
-    <h1>Loading...</h1>
+    <div style={styleLoaderWrapper}>
+      <ClipLoader color={'#3667D7'} loading size={60} />
+    </div>
   );
 }
 
-export default LoginScreen;
+export default LoadingScreen;

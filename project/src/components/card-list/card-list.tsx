@@ -4,7 +4,7 @@ import Card from '../card/card';
 type CardListProp = {
   offers: Offer[]
   namePage: 'MainPage' | 'PropertyPage'
-  onHoverHandler?: (locationId: number) => void
+  onHoverHandler?: (locationId: number | null) => void
 }
 
 function CardList({ offers, namePage, onHoverHandler }: CardListProp): JSX.Element {

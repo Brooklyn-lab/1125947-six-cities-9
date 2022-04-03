@@ -1,35 +1,27 @@
-import { useEffect } from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../../const';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { addOffers, changeCity } from '../../store/action';
-import { Offer } from '../../types/offers';
+import { Route, Routes } from 'react-router-dom';
+import { AppRoute } from '../../const';
+import { useAppSelector } from '../../hooks';
 import FavoriteScreen from '../favorite-screen/favorite-screen';
+import HistoryRouter from '../history-route/history-route';
+import LoadingScreen from '../loading-screen/login-screen';
 import LoginScreen from '../login-screen/login-screen';
 import MainScreen from '../main-screen/main-screen';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import PrivateRoute from '../private-route/private-route';
 import PropertyScreen from '../property-screen/property-screen';
+import browserHistory from '../../browser-history';
 
-type AppProps = {
-  favoriteOffers: Offer[]
-  offers: Offer[]
-}
+function App(): JSX.Element {
+  const { isDataLoaded } = useAppSelector((state) => state);
 
-function App({ favoriteOffers, offers }: AppProps): JSX.Element {
-  const dispatch = useAppDispatch();
-  const { currentCity } = useAppSelector((state) => state);
-
-  useEffect(() => {
-    dispatch(addOffers(offers));
-  }, [offers, dispatch]);
-
-  useEffect(() => {
-    dispatch(changeCity(currentCity.name));
-  }, [dispatch, currentCity.name]);
+  if (!isDataLoaded) {
+    return (
+      <LoadingScreen />
+    );
+  }
 
   return (
-    <BrowserRouter>
+    <HistoryRouter history={browserHistory}>
       <Routes>
         <Route
           path={AppRoute.Main}
@@ -42,8 +34,8 @@ function App({ favoriteOffers, offers }: AppProps): JSX.Element {
         <Route
           path={AppRoute.Favorites}
           element={
-            <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
-              <FavoriteScreen favoriteOffers={favoriteOffers} />
+            <PrivateRoute>
+              <FavoriteScreen />
             </PrivateRoute>
           }
         />
@@ -56,7 +48,7 @@ function App({ favoriteOffers, offers }: AppProps): JSX.Element {
           element={<NotFoundScreen />}
         />
       </Routes>
-    </BrowserRouter>
+    </HistoryRouter>
   );
 }
 
