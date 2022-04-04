@@ -17,7 +17,7 @@ function Header({ namePage }: HeaderProps): JSX.Element {
               <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
             </Link>
           </div>
-          {!namePage ? <HeaderNav /> : ''}
+          {namePage ? '' : <HeaderNav />}
         </div>
       </div>
     </header>
