@@ -2,8 +2,8 @@
 
 import { FormEvent, useRef } from 'react';
 import { useAppDispatch } from '../../hooks';
-import { getLoginName } from '../../store/action';
 import { loginAction } from '../../store/api-actions';
+import { getLoginName } from '../../store/user-process/user-process';
 import { AuthData } from '../../types/auth-data';
 import Header from '../header/header';
 

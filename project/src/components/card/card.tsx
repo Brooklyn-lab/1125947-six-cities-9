@@ -32,7 +32,11 @@ function Card({ offer, namePage, onHoverHandler }: CardProp): JSX.Element {
   };
 
   return (
-    <article className={`${isCurrentPage}__place-card place-card`} onMouseOver={onMouseOverHandler} onMouseOut={onMouseLeaveHandler} >
+    <article
+      className={`${isCurrentPage}__place-card place-card`}
+      onMouseOver={onMouseOverHandler}
+      onMouseOut={onMouseLeaveHandler}
+    >
       {
         isPremium &&
         <div className="place-card__mark">

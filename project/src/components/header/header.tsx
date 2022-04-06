@@ -7,7 +7,6 @@ type HeaderProps = {
 }
 
 function Header({ namePage }: HeaderProps): JSX.Element {
-
   return (
     <header className="header">
       <div className="container">

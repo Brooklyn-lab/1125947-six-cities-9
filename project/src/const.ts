@@ -37,3 +37,9 @@ export const typeSort = {
   PriceDown: 'Price: high to low',
   Rating: 'Top rated first',
 };
+
+export enum NameSpace {
+  data = 'DATA',
+  user = 'USER',
+  offer = 'OFFER',
+}

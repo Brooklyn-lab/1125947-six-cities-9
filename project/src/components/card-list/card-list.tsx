@@ -12,7 +12,7 @@ function CardList({ offers, namePage, onHoverHandler }: CardListProp): JSX.Eleme
 
   return (
     <div className={`${isMainPage ? 'cities__places-list tabs__content' : 'near-places__list'} places__list`}>
-      {offers.map((offer) => <Card key={offer.id} offer={offer} namePage={namePage}  onHoverHandler={onHoverHandler} />)}
+      {offers.map((offer) => <Card key={offer.id} offer={offer} namePage={namePage} onHoverHandler={onHoverHandler} />)}
     </div>
   );
 }

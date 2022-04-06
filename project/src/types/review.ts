@@ -1,8 +1,16 @@
-export type Review = {
+type User = {
+  avatarUrl: string,
   id: number,
-  avatar: string,
-  name: string,
-  rating: number,
-  comment: string,
-  date: Date,
-};
+  isPro: boolean,
+  name: string
+}
+
+export type Review = [
+  {
+    comment: string,
+    date: string,
+    id: number,
+    rating: number,
+    user: User
+  }
+];

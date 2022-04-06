@@ -7,8 +7,12 @@ import { dropToken, saveToken } from '../services/token';
 import { api, store } from '../store';
 import { AuthData } from '../types/auth-data';
 import { Offer } from '../types/offers';
+import { Review } from '../types/review';
 import { UserData } from '../types/user-data';
-import { changeCity, loadFavoriteOffers, loadOffers, redirectToRoute, requireAuthorization } from './action';
+import { loadFavoriteOffers, redirectToRoute } from './action';
+import { requireAuthorization } from './user-process/user-process';
+import { loadOffers, changeCity} from './offers-data/offers-data';
+import { fetchSelectedOffer, fetchReviews } from './offer-data/offer-data';
 
 export const fetchOffersAction = createAsyncThunk(
   'data/fetchOffers',
@@ -17,6 +21,18 @@ export const fetchOffersAction = createAsyncThunk(
       const { data } = await api.get<Offer[]>(APIRoute.Hotels);
       store.dispatch(loadOffers(data));
       store.dispatch(changeCity(LOCATIONS[0]));
+    } catch (error) {
+      errorHandle(error);
+    }
+  },
+);
+
+export const fetchSelectedOfferAction = createAsyncThunk(
+  'data/fetchSelectedOfferAction',
+  async (id: string) => {
+    try {
+      const { data } = await api.get<Offer>(`${APIRoute.Hotels}/${id}`);
+      store.dispatch(fetchSelectedOffer(data));
     } catch (error) {
       errorHandle(error);
     }
@@ -35,6 +51,18 @@ export const fetchFavoritesAction = createAsyncThunk(
   },
 );
 
+export const fetchReviewsAction = createAsyncThunk(
+  'data/fetchReviews',
+  async (id: string) => {
+    try {
+      const { data } = await api.get<Review[]>(`${APIRoute.Comments}/${id}`);
+      store.dispatch(fetchReviews(data));
+    } catch (error) {
+      errorHandle(error);
+    }
+  },
+);
+
 export const checkAuthAction = createAsyncThunk(
   'user/checkAuth',
   async () => {
@@ -44,7 +72,6 @@ export const checkAuthAction = createAsyncThunk(
     } catch (error) {
       errorHandle(error);
       store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
-      store.dispatch(redirectToRoute(AppRoute.SignIn));
     }
   },
 );

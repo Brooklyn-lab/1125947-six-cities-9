@@ -9,7 +9,7 @@ import { Offer } from '../../types/offers';
 import Header from '../header/header';
 
 function MainScreen(): JSX.Element {
-  const { currentCity, offersInCity } = useAppSelector((state) => state);
+  const { currentCity, offersInCity } = useAppSelector(({DATA}) => DATA);
   const [activeCard, setActiveCard] = useState<number | null>(null);
   const [selectedCard, setSelectedCard] = useState<Offer | null>(null);
 

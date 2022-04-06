@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, Fragment, useState } from 'react';
 
 const starsRating = [
   {
@@ -50,13 +50,12 @@ function CommentForm(): JSX.Element {
       <div className="reviews__rating-form form__rating">
         {
           starsRating.map((star) => (
-            <>
+            <Fragment key={star.id}>
               <input
                 className="form__rating-input visually-hidden"
                 type='radio'
                 name={star.name}
                 id={String(star.id)}
-                key={star.id}
                 title={star.title}
                 value={String(star.id)}
                 checked={rating === star.id}
@@ -67,7 +66,7 @@ function CommentForm(): JSX.Element {
                   <use xlinkHref="#icon-star"></use>
                 </svg>
               </label>
-            </>
+            </Fragment>
           ))
         }
       </div>

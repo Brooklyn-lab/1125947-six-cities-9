@@ -1,5 +1,5 @@
 import { Review } from '../../types/review';
-import { getRating, getMonth } from '../../utils/utils';
+// import { getRating, getMonth } from '../../utils/utils';
 
 type ReviewsItemProps = {
   review: Review
@@ -9,9 +9,9 @@ function ReviewsItem({ review }: ReviewsItemProps): JSX.Element {
 
   return (
     <li className="reviews__item">
-      <div className="reviews__user user">
+      {/* <div className="reviews__user user">
         <div className="reviews__avatar-wrapper user__avatar-wrapper">
-          <img className="reviews__avatar user__avatar" src={review.avatar} width="54" height="54" alt="Reviews avatar" />
+          <img className="reviews__avatar user__avatar" src={review} width="54" height="54" alt="Reviews avatar" />
         </div>
         <span className="reviews__user-name">
           {review.name}
@@ -28,7 +28,7 @@ function ReviewsItem({ review }: ReviewsItemProps): JSX.Element {
           {review.comment}
         </p>
         <time className="reviews__time" dateTime={review.date.toLocaleDateString()}>{getMonth(review.date)}</time>
-      </div>
+      </div> */}
     </li>
   );
 }
