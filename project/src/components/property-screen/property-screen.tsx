@@ -3,24 +3,27 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchSelectedOfferAction } from '../../store/api-actions';
+import { fetchNearbyOffersAction, fetchSelectedOfferAction } from '../../store/api-actions';
 import HeaderScreen from '../header/header';
 import LoadingScreen from '../loading-screen/login-screen';
-// import Map from '../map/map';
-// import CardList from '../card-list/card-list';
+import Map from '../map/map';
+import CardList from '../card-list/card-list';
 import { getRating, toCapitalLetter } from '../../utils/utils';
 import ReviewsContainer from '../reviews-container/reviews-container';
+import ButtonFavorite from '../button-favorite/button-favorite';
 
 function PropertyScreen(): JSX.Element {
   const { id } = useParams();
   const dispatch = useAppDispatch();
-  const { isSelectedOfferLoaded, selectedOffer } = useAppSelector(({ OFFER }) => OFFER);
+  const { isSelectedOfferLoaded, selectedOffer, nearbyOffers } = useAppSelector(({ OFFER }) => OFFER);
 
   useEffect(() => {
     dispatch(fetchSelectedOfferAction(String(id)));
-  }, [id]);
+    dispatch(fetchNearbyOffersAction(String(id)));
+  }, [id, dispatch]);
 
-  const { images, isPremium, title, goods, price, host, description, rating, bedrooms, maxAdults, type } = selectedOffer;
+  const { images, isPremium, title, goods, price, host, description, rating, bedrooms, maxAdults, type, isFavorite } = selectedOffer;
+  const hotelId = selectedOffer.id;
 
   return (
     <div className="page">
@@ -36,7 +39,7 @@ function PropertyScreen(): JSX.Element {
                 <div className="property__gallery">
                   {images.map((image) => (
                     <div key={image} className="property__image-wrapper">
-                      <img className="property__image" src={image} alt="Photo studio" />
+                      <img className="property__image" src={image} alt="Places" />
                     </div>
                   ))}
                 </div>
@@ -53,12 +56,12 @@ function PropertyScreen(): JSX.Element {
                     <h1 className="property__name">
                       {title}
                     </h1>
-                    <button className="property__bookmark-button button" type="button">
-                      <svg className="property__bookmark-icon" width="31" height="33">
-                        <use xlinkHref="#icon-bookmark"></use>
-                      </svg>
-                      <span className="visually-hidden">To bookmarks</span>
-                    </button>
+                    <ButtonFavorite
+                      size='Big'
+                      isFavorite={isFavorite}
+                      hotelId={hotelId}
+                      type='Property'
+                    />
                   </div>
                   <div className="property__rating rating">
                     <div className="property__stars rating__stars">
@@ -112,12 +115,12 @@ function PropertyScreen(): JSX.Element {
                   <ReviewsContainer />
                 </div>
               </div>
-              {/* <Map location={currentCity.location} points={offersInCity} namePage='PropertyPage' /> */}
+              <Map location={selectedOffer.city.location} points={nearbyOffers} namePage='PropertyPage' selectedCard={selectedOffer} />
             </section>
             <div className="container">
               <section className="near-places places">
                 <h2 className="near-places__title">Other places in the neighbourhood</h2>
-                {/* <CardList offers={offersInCity} namePage='PropertyPage' /> */}
+                <CardList offers={nearbyOffers} namePage='PropertyPage' />
               </section>
             </div>
           </main>

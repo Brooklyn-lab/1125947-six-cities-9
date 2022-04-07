@@ -30,6 +30,7 @@ function Map({ location, points, namePage, selectedCard }: MapProps) {
   const map = useMap(mapRef, location);
 
   const isMainPage = namePage === 'MainPage';
+  const isPropertyPage = namePage === 'PropertyPage';
 
   useEffect(() => {
     if (map) {
@@ -47,10 +48,20 @@ function Map({ location, points, namePage, selectedCard }: MapProps) {
           .addTo(map);
       });
     }
+
+    if (map && isPropertyPage && selectedCard) {
+      const marker = new Marker({
+        lat: selectedCard.location.latitude,
+        lng: selectedCard.location.longitude,
+      });
+      marker
+        .setIcon(currentCustomIcon)
+        .addTo(map);
+    }
   }, [map, points, selectedCard]);
 
   return (
-    <section className={`${isMainPage ? 'cities__map' : 'property__map'} map`} ref={mapRef}></section>
+    <section className={`${isMainPage ? 'cities__map' : 'property__map'} map`} ref={mapRef} ></section>
   );
 }
 

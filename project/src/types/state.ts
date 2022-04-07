@@ -6,6 +6,7 @@ import { Review } from './review';
 export type UserProcess = {
   authorizationStatus: AuthorizationStatus,
   userEmail: string,
+  selectedCardId: number | null,
 };
 
 export type OffersData = {
@@ -14,12 +15,15 @@ export type OffersData = {
   currentCity: City,
   offersInCity: Offer[],
   sortOfferType: string,
+  favoriteOffers: Offer[],
 };
 
 export type OfferData = {
   selectedOffer: Offer,
   isSelectedOfferLoaded: boolean,
   reviews: Review[],
+  nearbyOffers: Offer[],
+  isFormDisabled: boolean,
 }
 
 export type State = ReturnType<typeof store.getState>;

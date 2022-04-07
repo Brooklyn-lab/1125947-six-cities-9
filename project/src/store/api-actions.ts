@@ -9,10 +9,13 @@ import { AuthData } from '../types/auth-data';
 import { Offer } from '../types/offers';
 import { Review } from '../types/review';
 import { UserData } from '../types/user-data';
-import { loadFavoriteOffers, redirectToRoute } from './action';
-import { requireAuthorization } from './user-process/user-process';
-import { loadOffers, changeCity} from './offers-data/offers-data';
-import { fetchSelectedOffer, fetchReviews } from './offer-data/offer-data';
+import { redirectToRoute } from './action';
+import { getLoginName, requireAuthorization } from './user-process/user-process';
+import { loadOffers, changeCity, loadFavoriteOffers } from './offers-data/offers-data';
+import { fetchSelectedOffer, fetchReviews, fetchNearbyOffers, isFormEnabled } from './offer-data/offer-data';
+import { SendComment } from '../types/send-comment';
+import { FavoriteStatus } from '../types/favorite-status';
+import { dropEmail, getEmail, saveEmail } from '../services/user-email';
 
 export const fetchOffersAction = createAsyncThunk(
   'data/fetchOffers',
@@ -28,7 +31,7 @@ export const fetchOffersAction = createAsyncThunk(
 );
 
 export const fetchSelectedOfferAction = createAsyncThunk(
-  'data/fetchSelectedOfferAction',
+  'offer/fetchSelectedOfferAction',
   async (id: string) => {
     try {
       const { data } = await api.get<Offer>(`${APIRoute.Hotels}/${id}`);
@@ -51,12 +54,48 @@ export const fetchFavoritesAction = createAsyncThunk(
   },
 );
 
+export const toggleFavoriteStatusAction = createAsyncThunk(
+  'data/toggleFavoriteStatus',
+  async ({ id, status }: FavoriteStatus) => {
+    try {
+      const { data } = await api.post(`${APIRoute.Favorites}/${id}/${status}`);
+      console.log(data);
+    } catch (error) {
+      errorHandle(error);
+    }
+  },
+);
+
 export const fetchReviewsAction = createAsyncThunk(
-  'data/fetchReviews',
+  'offer/fetchReviews',
   async (id: string) => {
     try {
       const { data } = await api.get<Review[]>(`${APIRoute.Comments}/${id}`);
       store.dispatch(fetchReviews(data));
+    } catch (error) {
+      errorHandle(error);
+    }
+  },
+);
+
+export const sendCommentAction = createAsyncThunk(
+  'user/sendComment',
+  async ({ id, comment, rating }: SendComment) => {
+    try {
+      await api.post(`${APIRoute.Comments}/${id}`, { comment, rating });
+      store.dispatch(isFormEnabled(false));
+    } catch (error) {
+      errorHandle(error);
+    }
+  },
+);
+
+export const fetchNearbyOffersAction = createAsyncThunk(
+  'offer/fetchNearbyOffers',
+  async (id: string) => {
+    try {
+      const { data } = await api.get<Offer[]>(`${APIRoute.Hotels}/${id}/nearby`);
+      store.dispatch(fetchNearbyOffers(data));
     } catch (error) {
       errorHandle(error);
     }
@@ -68,7 +107,9 @@ export const checkAuthAction = createAsyncThunk(
   async () => {
     try {
       await api.get(APIRoute.Login);
+      const login = getEmail();
       store.dispatch(requireAuthorization(AuthorizationStatus.Auth));
+      store.dispatch(getLoginName(login));
     } catch (error) {
       errorHandle(error);
       store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
@@ -82,8 +123,10 @@ export const loginAction = createAsyncThunk(
     try {
       const { data: { token } } = await api.post<UserData>(APIRoute.Login, { email, password });
       saveToken(token);
+      saveEmail(email);
       store.dispatch(requireAuthorization(AuthorizationStatus.Auth));
       store.dispatch(redirectToRoute(AppRoute.Main));
+      store.dispatch(getLoginName(email));
     } catch (error) {
       errorHandle(error);
       store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
@@ -97,6 +140,7 @@ export const logoutAction = createAsyncThunk(
     try {
       await api.delete(APIRoute.Logout);
       dropToken();
+      dropEmail();
       store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
       store.dispatch(redirectToRoute(AppRoute.SignIn));
     } catch (error) {

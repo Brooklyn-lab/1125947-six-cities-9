@@ -16,6 +16,7 @@ const initialState: OffersData = {
   },
   offersInCity: [],
   sortOfferType: typeSort.Popular,
+  favoriteOffers: [],
 };
 
 export const offersData = createSlice({
@@ -53,7 +54,10 @@ export const offersData = createSlice({
           break;
       }
     },
+    loadFavoriteOffers: (state, action) => {
+      state.favoriteOffers = action.payload;
+    },
   },
 });
 
-export const { loadOffers, changeCity, changeSortOffersType } = offersData.actions;
+export const { loadOffers, changeCity, changeSortOffersType, loadFavoriteOffers } = offersData.actions;

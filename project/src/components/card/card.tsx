@@ -1,12 +1,16 @@
+/* eslint-disable no-console */
+
 import { generatePath, Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
+import { useAppDispatch } from '../../hooks';
+import { getSelectedCardId } from '../../store/user-process/user-process';
 import { Offer } from '../../types/offers';
 import { getRating, textToUpperCase } from '../../utils/utils';
+import ButtonFavorite from '../button-favorite/button-favorite';
 
 type CardProp = {
   offer: Offer
   namePage: 'MainPage' | 'PropertyPage'
-  onHoverHandler?: (locationId: number | null) => void
 }
 
 enum CurrentCity {
@@ -14,21 +18,18 @@ enum CurrentCity {
   'PropertyPage' = 'near'
 }
 
-function Card({ offer, namePage, onHoverHandler }: CardProp): JSX.Element {
-  const { previewImage, price, rating, title, type, id, isPremium } = offer;
+function Card({ offer, namePage }: CardProp): JSX.Element {
+  const { previewImage, price, rating, title, type, id, isPremium, isFavorite } = offer;
+  const dispatch = useAppDispatch();
 
   const isCurrentPage = CurrentCity[namePage];
 
   const onMouseOverHandler = () => {
-    if (onHoverHandler) {
-      onHoverHandler(id);
-    }
+    dispatch(getSelectedCardId(id));
   };
 
   const onMouseLeaveHandler = () => {
-    if (onHoverHandler) {
-      onHoverHandler(null);
-    }
+    dispatch(getSelectedCardId(null));
   };
 
   return (
@@ -54,12 +55,12 @@ function Card({ offer, namePage, onHoverHandler }: CardProp): JSX.Element {
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className="place-card__bookmark-button button" type="button">
-            <svg className="place-card__bookmark-icon" width="18" height="19">
-              <use xlinkHref="#icon-bookmark"></use>
-            </svg>
-            <span className="visually-hidden">To bookmarks</span>
-          </button>
+          <ButtonFavorite
+            size='Small'
+            hotelId={id}
+            isFavorite={isFavorite}
+            type='Place'
+          />
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">

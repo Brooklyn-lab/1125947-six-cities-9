@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace } from '../../const';
 import { OfferData } from '../../types/state';
@@ -41,6 +39,8 @@ const initialState: OfferData = {
   },
   isSelectedOfferLoaded: false,
   reviews: [],
+  nearbyOffers: [],
+  isFormDisabled: false,
 };
 
 export const offerData = createSlice({
@@ -53,9 +53,15 @@ export const offerData = createSlice({
     },
     fetchReviews: (state, action) => {
       state.reviews = action.payload;
-      console.log(action.payload);
+    },
+    fetchNearbyOffers: (state, action) => {
+      state.nearbyOffers = [];
+      state.nearbyOffers = action.payload;
+    },
+    isFormEnabled: (state, action) => {
+      state.isFormDisabled = action.payload;
     },
   },
 });
 
-export const { fetchSelectedOffer, fetchReviews } = offerData.actions;
+export const { fetchSelectedOffer, fetchReviews, fetchNearbyOffers, isFormEnabled } = offerData.actions;
