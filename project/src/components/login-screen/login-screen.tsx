@@ -1,17 +1,28 @@
 /* eslint-disable no-console */
 
-import { FormEvent, useRef } from 'react';
+import { FormEvent, useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { AppRoute, LOCATIONS } from '../../const';
 import { useAppDispatch } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
+import { changeCity } from '../../store/offers-data/offers-data';
 import { getLoginName } from '../../store/user-process/user-process';
 import { AuthData } from '../../types/auth-data';
+import { getRandomInt } from '../../utils/utils';
 import Header from '../header/header';
 
 function LoginScreen(): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
-
+  const [city, setCity] = useState('');
+  const randomCityName = () => LOCATIONS[getRandomInt(0, LOCATIONS.length - 1)];
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    setCity(randomCityName());
+    dispatch(changeCity(city));
+    console.log(city);
+  }, [city]);
 
   const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));
@@ -71,9 +82,9 @@ function LoginScreen(): JSX.Element {
             </section>
             <section className="locations locations--login locations--current">
               <div className="locations__item">
-                <a className="locations__item-link" href="#">
-                  <span>Amsterdam</span>
-                </a>
+                <Link className="locations__item-link" to={AppRoute.Main}>
+                  <span>{city}</span>
+                </Link>
               </div>
             </section>
           </div>

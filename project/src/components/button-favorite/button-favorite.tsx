@@ -1,4 +1,6 @@
-import { useAppDispatch } from '../../hooks';
+import { AppRoute, AuthorizationStatus } from '../../const';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { redirectToRoute } from '../../store/action';
 import { toggleFavoriteStatusAction } from '../../store/api-actions';
 
 type ButtonFavoriteProps = {
@@ -33,17 +35,22 @@ const classNameButton = {
 };
 
 function ButtonFavorite({ size, isFavorite, hotelId, type }: ButtonFavoriteProps): JSX.Element {
+  const { authorizationStatus } = useAppSelector(({ USER }) => USER);
   const dispatch = useAppDispatch();
   const iconSize = markSize[size];
   const className = classNameButton[type];
 
   const toggleFavoriteStatus = () => {
-    const favoriteData = {
-      id: hotelId,
-      status: Number(!isFavorite),
-    };
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      const favoriteData = {
+        id: hotelId,
+        status: Number(!isFavorite),
+      };
 
-    dispatch(toggleFavoriteStatusAction(favoriteData));
+      dispatch(toggleFavoriteStatusAction(favoriteData));
+    } else {
+      dispatch(redirectToRoute(AppRoute.SignIn));
+    }
   };
 
   return (
