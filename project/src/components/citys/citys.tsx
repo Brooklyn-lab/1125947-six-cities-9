@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { LOCATIONS } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { changeCity } from '../../store/action';
+import { changeCity } from '../../store/offers-data/offers-data';
 
 function CityList(): JSX.Element {
-  const currentCity = useAppSelector((state) => state.currentCity);
+  const { currentCity } = useAppSelector(({ DATA }) => DATA);
   const dispatch = useAppDispatch();
   const [activeLocation, setActiveLocation] = useState(currentCity.name);
 

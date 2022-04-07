@@ -12,7 +12,7 @@ import PropertyScreen from '../property-screen/property-screen';
 import browserHistory from '../../browser-history';
 
 function App(): JSX.Element {
-  const { isDataLoaded } = useAppSelector((state) => state);
+  const { isDataLoaded } = useAppSelector(({DATA}) => DATA);
 
   if (!isDataLoaded) {
     return (

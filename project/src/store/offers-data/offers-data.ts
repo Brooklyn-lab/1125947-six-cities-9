@@ -1,21 +1,11 @@
-import { createReducer } from '@reduxjs/toolkit';
-import { changeCity, changeSortOffersType, getLoginName, loadFavoriteOffers, loadOffers, requireAuthorization } from './action';
-import { Offer } from '../types/offers';
-import { City } from '../types/offers';
-import { AuthorizationStatus, typeSort } from '../const';
+import { createSlice } from '@reduxjs/toolkit';
+import { NameSpace, typeSort } from '../../const';
+import { Offer } from '../../types/offers';
+import { OffersData } from '../../types/state';
 
-interface InitialState {
-  currentCity: City,
-  offersInCity: Offer[],
-  offers: Offer[],
-  favoriteOffers: Offer[],
-  sortOfferType: string,
-  authorizationStatus: string,
-  isDataLoaded: boolean,
-  userEmail: string,
-}
-
-const initialState: InitialState = {
+const initialState: OffersData = {
+  offers: [],
+  isDataLoaded: false,
   currentCity: {
     location: {
       latitude: 52.3909553943508,
@@ -25,32 +15,24 @@ const initialState: InitialState = {
     name: 'Paris',
   },
   offersInCity: [],
-  offers: [],
-  favoriteOffers: [],
   sortOfferType: typeSort.Popular,
-  authorizationStatus: AuthorizationStatus.Unknown,
-  isDataLoaded: false,
-  userEmail: '',
+  favoriteOffers: [],
 };
 
-const reducer = createReducer(initialState, (builder) => {
-  builder
-    .addCase(loadOffers, (state, action) => {
+export const offersData = createSlice({
+  name: NameSpace.data,
+  initialState,
+  reducers: {
+    loadOffers: (state, action) => {
       state.offers = action.payload;
       state.isDataLoaded = true;
-    })
-    .addCase(requireAuthorization, (state, action) => {
-      state.authorizationStatus = action.payload;
-    })
-    .addCase(loadFavoriteOffers, (state, action) => {
-      state.favoriteOffers = action.payload;
-    })
-    .addCase(changeCity, (state, action) => {
+    },
+    changeCity: (state, action) => {
       state.offersInCity = [];
       state.offers.find((offer) => (offer.city.name === action.payload) ? state.currentCity = offer.city : null);
       state.offers.filter((offer) => (offer.city.name === action.payload) ? state.offersInCity.push(offer) : []);
-    })
-    .addCase(changeSortOffersType, (state, action) => {
+    },
+    changeSortOffersType: (state, action) => {
       state.sortOfferType = action.payload;
 
       function sortOffers(offers: Offer[], sortType: 'ASC' | 'DESC', key: keyof Pick<Offer, 'id' | 'price' | 'rating'>) {
@@ -71,10 +53,11 @@ const reducer = createReducer(initialState, (builder) => {
           state.offersInCity = sortOffers(state.offersInCity, 'DESC', 'rating');
           break;
       }
-    })
-    .addCase(getLoginName, (state, action) => {
-      state.userEmail = action.payload;
-    });
+    },
+    loadFavoriteOffers: (state, action) => {
+      state.favoriteOffers = action.payload;
+    },
+  },
 });
 
-export { reducer };
+export const { loadOffers, changeCity, changeSortOffersType, loadFavoriteOffers } = offersData.actions;

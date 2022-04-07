@@ -11,4 +11,6 @@ export function getListCity(offers: Offer[]) {
   return listCity;
 }
 
-export const getMonth = ((date: Date) => `${date.toLocaleString('EN', { month: 'long' })} ${date.getFullYear()}`);
+export const toCapitalLetter = ((word: string) => `${word[0].toUpperCase()}${word.slice(1, word.length)}`);
+
+export const getRandomInt = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min;

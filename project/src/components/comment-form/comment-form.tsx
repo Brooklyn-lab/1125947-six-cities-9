@@ -1,4 +1,7 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, Fragment, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { sendCommentAction } from '../../store/api-actions';
+import { isFormEnabled } from '../../store/offer-data/offer-data';
 
 const starsRating = [
   {
@@ -28,12 +31,18 @@ const starsRating = [
   },
 ];
 
+const MAX_LENGTH_COMMENT = 300;
+const MIN_LENGTH_COMMENT = 50;
+
 function CommentForm(): JSX.Element {
-  const [review, setReview] = useState('');
+  const { selectedOffer, isFormDisabled } = useAppSelector(({ OFFER }) => OFFER);
+  const dispatch = useAppDispatch();
+
+  const [comment, setComment] = useState('');
   const [rating, setRating] = useState(0);
 
   const getValueHandler = (evt: ChangeEvent<HTMLTextAreaElement>) => {
-    setReview(evt.target.value);
+    setComment(evt.target.value);
   };
 
   const getStarsRating = (evt: ChangeEvent<HTMLInputElement>) => {
@@ -42,6 +51,11 @@ function CommentForm(): JSX.Element {
 
   const formSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
+    const id = String(selectedOffer.id);
+    dispatch(sendCommentAction({ id, comment, rating }));
+    setComment('');
+    setRating(0);
+    dispatch(isFormEnabled(true));
   };
 
   return (
@@ -50,24 +64,24 @@ function CommentForm(): JSX.Element {
       <div className="reviews__rating-form form__rating">
         {
           starsRating.map((star) => (
-            <>
+            <Fragment key={star.id}>
               <input
                 className="form__rating-input visually-hidden"
                 type='radio'
                 name={star.name}
                 id={String(star.id)}
-                key={star.id}
                 title={star.title}
                 value={String(star.id)}
                 checked={rating === star.id}
                 onChange={getStarsRating}
+                disabled={isFormDisabled}
               />
               <label htmlFor={String(star.id)} className="reviews__rating-label form__rating-label" title={star.title}>
                 <svg className="form__star-image" width="37" height="33">
                   <use xlinkHref="#icon-star"></use>
                 </svg>
               </label>
-            </>
+            </Fragment>
           ))
         }
       </div>
@@ -77,14 +91,21 @@ function CommentForm(): JSX.Element {
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
         onChange={getValueHandler}
-        value={review}
+        value={comment}
+        disabled={isFormDisabled}
       >
       </textarea>
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled={rating === 0 || review.length === 0}>Submit</button>
+        <button
+          className="reviews__submit form__submit button"
+          type="submit"
+          disabled={rating === 0 || comment.length < MIN_LENGTH_COMMENT || comment.length > MAX_LENGTH_COMMENT || isFormDisabled}
+        >
+          Submit
+        </button>
       </div>
     </form>
   );

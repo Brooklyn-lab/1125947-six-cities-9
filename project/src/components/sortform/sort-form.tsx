@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { typeSort } from '../../const';
 import { useAppDispatch } from '../../hooks';
-import { changeSortOffersType } from '../../store/action';
+import { changeSortOffersType } from '../../store/offers-data/offers-data';
 
 function SortForm(): JSX.Element {
   const [isOptionsOpen, setIsOptionsOpen] = useState(false);

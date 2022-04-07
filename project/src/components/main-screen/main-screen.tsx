@@ -9,16 +9,14 @@ import { Offer } from '../../types/offers';
 import Header from '../header/header';
 
 function MainScreen(): JSX.Element {
-  const { currentCity, offersInCity } = useAppSelector((state) => state);
-  const [activeCard, setActiveCard] = useState<number | null>(null);
+  const { currentCity, offersInCity } = useAppSelector(({DATA}) => DATA);
+  const { selectedCardId } = useAppSelector(({ USER }) => USER);
   const [selectedCard, setSelectedCard] = useState<Offer | null>(null);
 
-  const onHoverHandler = (locationId: number | null) => setActiveCard(locationId);
-
   useEffect(() => {
-    const foundCard = offersInCity.find((offer) => offer.id === activeCard);
+    const foundCard = offersInCity.find((offer) => offer.id === selectedCardId);
     setSelectedCard(foundCard || null);
-  }, [activeCard, offersInCity]);
+  }, [selectedCardId, offersInCity]);
 
   return (
     <div className="page page--gray page--main">
@@ -36,7 +34,7 @@ function MainScreen(): JSX.Element {
                 <h2 className="visually-hidden">Places</h2>
                 <b className="places__found">{offersInCity.length} places to stay in {currentCity.name}</b>
                 <SortForm />
-                <CardList offers={offersInCity} onHoverHandler={onHoverHandler} namePage='MainPage' />
+                <CardList offers={offersInCity} namePage='MainPage' />
               </section>
               <div className="cities__right-section">
                 <Map location={currentCity.location} points={offersInCity} namePage='MainPage' selectedCard={selectedCard} />
