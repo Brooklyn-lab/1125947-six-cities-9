@@ -16,6 +16,7 @@ export type OffersData = {
   offersInCity: Offer[],
   sortOfferType: string,
   favoriteOffers: Offer[],
+  isFavoriteOffersLoaded: boolean,
 };
 
 export type OfferData = {

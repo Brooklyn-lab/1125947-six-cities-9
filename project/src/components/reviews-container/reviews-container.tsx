@@ -7,13 +7,15 @@ import CommentForm from '../comment-form/comment-form';
 import Reviews from '../reviews/reviews';
 
 function ReviewsContainer(): JSX.Element {
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   const { reviews } = useAppSelector(({ OFFER }) => OFFER);
   const { authorizationStatus } = useAppSelector(({ USER }) => USER);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(fetchReviewsAction(String(id)));
+    if (id) {
+      dispatch(fetchReviewsAction(id));
+    }
   }, [id, dispatch]);
 
   return (

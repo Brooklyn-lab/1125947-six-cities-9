@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 import { generatePath, Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { useAppDispatch } from '../../hooks';
@@ -13,7 +11,7 @@ type CardProp = {
   namePage: 'MainPage' | 'PropertyPage'
 }
 
-enum CurrentCity {
+enum CurrentPageData {
   'MainPage' = 'cities',
   'PropertyPage' = 'near'
 }
@@ -22,21 +20,26 @@ function Card({ offer, namePage }: CardProp): JSX.Element {
   const { previewImage, price, rating, title, type, id, isPremium, isFavorite } = offer;
   const dispatch = useAppDispatch();
 
-  const isCurrentPage = CurrentCity[namePage];
+  const сurrentPage = CurrentPageData[namePage];
+  const isMainPage = namePage === 'MainPage';
 
-  const onMouseOverHandler = () => {
-    dispatch(getSelectedCardId(id));
+  const onMouseEnterHandler = () => {
+    if (isMainPage) {
+      dispatch(getSelectedCardId(id));
+    }
   };
 
   const onMouseLeaveHandler = () => {
-    dispatch(getSelectedCardId(null));
+    if (isMainPage) {
+      dispatch(getSelectedCardId(null));
+    }
   };
 
   return (
     <article
-      className={`${isCurrentPage}__place-card place-card`}
-      onMouseOver={onMouseOverHandler}
-      onMouseOut={onMouseLeaveHandler}
+      className={`${сurrentPage}__place-card place-card`}
+      onMouseEnter={onMouseEnterHandler}
+      onMouseLeave={onMouseLeaveHandler}
     >
       {
         isPremium &&
@@ -44,9 +47,9 @@ function Card({ offer, namePage }: CardProp): JSX.Element {
           <span>Premium</span>
         </div>
       }
-      <div className={`${isCurrentPage}-places__image-wrapper place-card__image-wrapper`} >
+      <div className={`${сurrentPage}-places__image-wrapper place-card__image-wrapper`} >
         <Link to={generatePath(AppRoute.Room, { id: String(id) })}>
-          <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image" />
+          <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place" />
         </Link>
       </div>
       <div className="place-card__info">

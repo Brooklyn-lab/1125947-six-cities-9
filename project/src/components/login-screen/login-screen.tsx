@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 import { FormEvent, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoute, LOCATIONS } from '../../const';
@@ -21,8 +19,7 @@ function LoginScreen(): JSX.Element {
   useEffect(() => {
     setCity(randomCityName());
     dispatch(changeCity(city));
-    console.log(city);
-  }, [city]);
+  }, [city, dispatch]);
 
   const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));

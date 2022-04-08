@@ -1,5 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { NameSpace } from '../../const';
+import { Offer } from '../../types/offers';
+import { Review } from '../../types/review';
 import { OfferData } from '../../types/state';
 
 const initialState: OfferData = {
@@ -47,18 +49,18 @@ export const offerData = createSlice({
   name: NameSpace.offer,
   initialState,
   reducers: {
-    fetchSelectedOffer: (state, action) => {
+    fetchSelectedOffer: (state, action: PayloadAction<Offer>) => {
       state.selectedOffer = action.payload;
       state.isSelectedOfferLoaded = true;
     },
-    fetchReviews: (state, action) => {
+    fetchReviews: (state, action: PayloadAction<Review[]>) => {
       state.reviews = action.payload;
     },
-    fetchNearbyOffers: (state, action) => {
+    fetchNearbyOffers: (state, action: PayloadAction<Offer[]>) => {
       state.nearbyOffers = [];
       state.nearbyOffers = action.payload;
     },
-    isFormEnabled: (state, action) => {
+    isFormEnabled: (state, action: PayloadAction<boolean>) => {
       state.isFormDisabled = action.payload;
     },
   },

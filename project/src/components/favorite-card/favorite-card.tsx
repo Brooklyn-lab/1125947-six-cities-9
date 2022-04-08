@@ -28,7 +28,7 @@ function FavoriteCard({ offer }: FavoriteCardProp): JSX.Element {
       }
       <div className="favorites__image-wrapper place-card__image-wrapper">
         <Link to={generatePath(AppRoute.Room, { id: String(activeCard) })}>
-          <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image" />
+          <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place" />
         </Link>
       </div>
       <div className="favorites__card-info place-card__info">

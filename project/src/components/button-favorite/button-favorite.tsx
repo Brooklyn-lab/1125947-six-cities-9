@@ -10,6 +10,11 @@ type ButtonFavoriteProps = {
   type: 'Place' | 'Property'
 }
 
+enum classNameButton {
+  Property = 'property',
+  Place = 'place-card'
+}
+
 const markSize = {
   Small: {
     with: '18',
@@ -21,24 +26,13 @@ const markSize = {
   },
 };
 
-const classNameButton = {
-  Property: {
-    Active: 'property__bookmark-button property__bookmark-button--active button',
-    Normal: 'property__bookmark-button button',
-    Icon: 'property__bookmark-icon',
-  },
-  Place: {
-    Active: 'place-card__bookmark-button place-card__bookmark-button--active button',
-    Normal: 'place-card__bookmark-button button',
-    Icon: 'place-card__bookmark-icon',
-  },
-};
-
 function ButtonFavorite({ size, isFavorite, hotelId, type }: ButtonFavoriteProps): JSX.Element {
   const { authorizationStatus } = useAppSelector(({ USER }) => USER);
   const dispatch = useAppDispatch();
   const iconSize = markSize[size];
-  const className = classNameButton[type];
+  const pageType = classNameButton[type];
+
+  const isActiveClass = `${isFavorite ? `${pageType}__bookmark-button--active` : ''}`;
 
   const toggleFavoriteStatus = () => {
     if (authorizationStatus === AuthorizationStatus.Auth) {
@@ -55,12 +49,12 @@ function ButtonFavorite({ size, isFavorite, hotelId, type }: ButtonFavoriteProps
 
   return (
     <button
-      className={`${isFavorite ? className.Active : className.Normal}`}
+      className={`${pageType}__bookmark-button button ${isActiveClass}`}
       type="button"
       onClick={toggleFavoriteStatus}
     >
       <svg
-        className={className.Icon}
+        className={`${pageType}__bookmark-icon`}
         width={iconSize.with}
         height={iconSize.height}
       >
