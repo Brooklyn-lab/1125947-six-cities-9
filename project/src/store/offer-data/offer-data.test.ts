@@ -14,13 +14,13 @@ const state: OfferData = {
   reviews: [],
   nearbyOffers: [],
   isFormDisabled: false,
-}
+};
 
 const selectOfferData: SelectedOffer = {
   offer: mockOffer,
   offersNearby: mockOffers,
-  comments: mockReviews
-}
+  comments: mockReviews,
+};
 
 describe('Router: offerData', () => {
   it('should update selectedOffer to selectedOffer', () => {

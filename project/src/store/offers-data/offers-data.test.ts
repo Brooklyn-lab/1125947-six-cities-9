@@ -28,7 +28,7 @@ describe('Reducer: OffersData', () => {
         sortOfferType: typeSort.Popular,
         favoriteOffers: [],
         isFavoriteOffersLoaded: false,
-      })
+      });
   });
 
   // it('should update changeCity when changeCity changes', () => {
@@ -47,7 +47,7 @@ describe('Reducer: OffersData', () => {
   //     })
   // });
 
-  it('should update sortOfferType when change type', () => {
+  it('should update sortOfferType when change type popular', () => {
     expect(offersData.reducer(state, changeSortOffersType('Popular')))
       .toEqual({
         offers: [],
@@ -60,7 +60,7 @@ describe('Reducer: OffersData', () => {
       });
   });
 
-  it('should update sortOfferType when change type', () => {
+  it('should update sortOfferType when change type priceUp', () => {
     expect(offersData.reducer(state, changeSortOffersType('Price: low to high')))
       .toEqual({
         offers: [],
@@ -73,7 +73,7 @@ describe('Reducer: OffersData', () => {
       });
   });
 
-  it('should update sortOfferType when change type', () => {
+  it('should update sortOfferType when change type priceDown', () => {
     expect(offersData.reducer(state, changeSortOffersType('Price: high to low')))
       .toEqual({
         offers: [],
@@ -86,7 +86,7 @@ describe('Reducer: OffersData', () => {
       });
   });
 
-  it('should update sortOfferType when change type', () => {
+  it('should update sortOfferType when change type rating', () => {
     expect(offersData.reducer(state, changeSortOffersType('Top rated first')))
       .toEqual({
         offers: [],
@@ -109,6 +109,6 @@ describe('Reducer: OffersData', () => {
         sortOfferType: typeSort.Popular,
         favoriteOffers: mockOffers,
         isFavoriteOffersLoaded: true,
-      })
+      });
   });
 });

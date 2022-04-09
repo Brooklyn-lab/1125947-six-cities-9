@@ -58,8 +58,8 @@ describe('Async actions', () => {
   it('should dispatch Toggle_Favorite_Status when POST /favorites', async () => {
     const status = {
       id: 1,
-      status: 1
-    }
+      status: 1,
+    };
 
     mockAPI
       .onPost(`${APIRoute.Favorites}/${status.id}/${status.status}`)
@@ -69,7 +69,7 @@ describe('Async actions', () => {
 
     await store.dispatch(toggleFavoriteStatusAction(status));
     store.getActions().map(({ type }) => type);
-  })
+  });
 
   it('should dispatch Load_Selected_Offer when GET /hotels', async () => {
     const store = mockStore();
@@ -93,7 +93,7 @@ describe('Async actions', () => {
       id: '2',
       comment: datatype.string(),
       rating: 4,
-    }
+    };
     const hotelId = 3;
     mockAPI
       .onPost(`${APIRoute.Comments}/${hotelId}`)

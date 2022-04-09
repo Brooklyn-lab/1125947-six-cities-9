@@ -17,7 +17,7 @@ describe('Reducer: userProcess', () => {
       authorizationStatus: AuthorizationStatus.NoAuth,
       userEmail: '',
       selectedCardId: null,
-    }
+    };
 
     expect(userProcess.reducer(state, requireAuthorization(AuthorizationStatus.Auth)))
       .toEqual({

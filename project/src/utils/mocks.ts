@@ -93,9 +93,5 @@ export const makeFakeReview = (amount = AMOUNT): Review[] => Array.from(Array(am
     id: datatype.number(),
     isPro: random.boolean(),
     name: internet.userName(),
-  }
+  },
 }));
-
-export const makeFakeSelectedOffer = {
-
-}
