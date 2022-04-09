@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { AppRoute, AuthorizationStatus } from '../../const';
-import { fetchFavoritesAction, logoutAction } from '../../store/api-actions';
+import { logoutAction } from '../../store/api-actions';
 import { Link } from 'react-router-dom';
 
 function HeaderNav(): JSX.Element {
@@ -15,9 +15,6 @@ function HeaderNav(): JSX.Element {
             <li className="header__nav-item user">
               <Link
                 className="header__nav-link header__nav-link--profile"
-                onClick={() => {
-                  dispatch(fetchFavoritesAction());
-                }}
                 to={AppRoute.Favorites}
               >
                 <div className="header__avatar-wrapper user__avatar-wrapper">

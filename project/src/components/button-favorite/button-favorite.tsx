@@ -32,7 +32,7 @@ function ButtonFavorite({ size, isFavorite, hotelId, type }: ButtonFavoriteProps
   const iconSize = markSize[size];
   const pageType = classNameButton[type];
 
-  const isActiveClass = `${isFavorite ? `${pageType}__bookmark-button--active` : ''}`;
+  const isActiveClass = isFavorite ? `${pageType}__bookmark-button--active` : '';
 
   const toggleFavoriteStatus = () => {
     if (authorizationStatus === AuthorizationStatus.Auth) {

@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import Footer from '../footer/footer';
 import Header from '../header/header';

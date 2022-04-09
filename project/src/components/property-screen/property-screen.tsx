@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchNearbyOffersAction, fetchSelectedOfferAction } from '../../store/api-actions';
+import { fetchSelectedOfferAction } from '../../store/api-actions';
 import HeaderScreen from '../header/header';
 import LoadingScreen from '../loading-screen/login-screen';
 import Map from '../map/map';
@@ -18,7 +18,6 @@ function PropertyScreen(): JSX.Element {
   useEffect(() => {
     if (id) {
       dispatch(fetchSelectedOfferAction(id));
-      dispatch(fetchNearbyOffersAction(id));
     }
   }, [id, dispatch]);
 

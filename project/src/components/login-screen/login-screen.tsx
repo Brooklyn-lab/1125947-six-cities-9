@@ -18,8 +18,7 @@ function LoginScreen(): JSX.Element {
 
   useEffect(() => {
     setCity(randomCityName());
-    dispatch(changeCity(city));
-  }, [city, dispatch]);
+  }, [city]);
 
   const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));
@@ -79,7 +78,11 @@ function LoginScreen(): JSX.Element {
             </section>
             <section className="locations locations--login locations--current">
               <div className="locations__item">
-                <Link className="locations__item-link" to={AppRoute.Main}>
+                <Link
+                  className="locations__item-link"
+                  to={AppRoute.Main}
+                  onClick={() => dispatch(changeCity(city))}
+                >
                   <span>{city}</span>
                 </Link>
               </div>
