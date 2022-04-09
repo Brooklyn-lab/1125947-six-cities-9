@@ -6,13 +6,15 @@ import thunk, { ThunkDispatch } from 'redux-thunk';
 import { createAPI } from '../services/api';
 import { State } from '../types/state';
 import { APIRoute } from '../const';
-import { checkAuthAction, fetchFavoritesAction, fetchOffersAction, fetchSelectedOfferAction, loginAction, logoutAction, sendCommentAction, toggleFavoriteStatusAction } from './api-actions';
+import { checkAuthAction, fetchFavoritesAction, fetchOffersAction, fetchSelectedOfferAction, loginAction, sendCommentAction, toggleFavoriteStatusAction } from './api-actions';
+// import { logoutAction } from './api-actions';
 import { getLoginName, requireAuthorization } from './user-process/user-process';
 import { AuthData } from '../types/auth-data';
 import { redirectToRoute } from './action';
 import { makeFakeOffers } from '../utils/mocks';
 import { changeCity, loadFavoriteOffers, loadOffers } from './offers-data/offers-data';
-import { fetchSelectedOffer, isFormEnabled } from './offer-data/offer-data';
+import { fetchSelectedOffer } from './offer-data/offer-data';
+// import { isFormEnabled } from './offer-data/offer-data';
 
 describe('Async actions', () => {
   const api = createAPI();

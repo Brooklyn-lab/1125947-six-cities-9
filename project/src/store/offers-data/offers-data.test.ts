@@ -1,8 +1,9 @@
 import { typeSort } from '../../const';
 import { OffersData } from '../../types/state';
 import { makeFakeCurrentCity, makeFakeOffers } from '../../utils/mocks';
-import { changeSortOffersType, offersData } from './offers-data';
-import { loadOffers, changeCity, loadFavoriteOffers } from './offers-data';
+import { changeSortOffersType, offersData, loadOffers, loadFavoriteOffers } from './offers-data';
+// import { changeCity } from './offers-data';
+
 
 const mockCurrentCity = makeFakeCurrentCity();
 const mockOffers = makeFakeOffers();
