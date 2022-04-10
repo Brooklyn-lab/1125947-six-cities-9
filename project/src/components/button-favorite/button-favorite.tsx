@@ -49,11 +49,13 @@ function ButtonFavorite({ size, isFavorite, hotelId, type }: ButtonFavoriteProps
 
   return (
     <button
+      data-testid={`${pageType}__bookmark-button`}
       className={`${pageType}__bookmark-button button ${isActiveClass}`}
       type="button"
       onClick={toggleFavoriteStatus}
     >
       <svg
+        data-testid={`${pageType}__bookmark-icon`}
         className={`${pageType}__bookmark-icon`}
         width={iconSize.with}
         height={iconSize.height}

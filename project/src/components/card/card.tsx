@@ -13,7 +13,7 @@ type CardProp = {
 
 enum CurrentPageData {
   'MainPage' = 'cities',
-  'PropertyPage' = 'near'
+  'PropertyPage' = 'near',
 }
 
 function Card({ offer, namePage }: CardProp): JSX.Element {
@@ -37,6 +37,7 @@ function Card({ offer, namePage }: CardProp): JSX.Element {
 
   return (
     <article
+      data-testid={`${сurrentPage}__place-card`}
       className={`${сurrentPage}__place-card place-card`}
       onMouseEnter={onMouseEnterHandler}
       onMouseLeave={onMouseLeaveHandler}
@@ -47,8 +48,14 @@ function Card({ offer, namePage }: CardProp): JSX.Element {
           <span>Premium</span>
         </div>
       }
-      <div className={`${сurrentPage}-places__image-wrapper place-card__image-wrapper`} >
-        <Link to={generatePath(AppRoute.Room, { id: String(id) })}>
+      <div
+        data-testid={`${сurrentPage}-places__image-wrapper`}
+        className={`${сurrentPage}-places__image-wrapper place-card__image-wrapper`}
+      >
+        <Link
+          data-testid="image-link"
+          to={generatePath(AppRoute.Room, { id: String(id) })}
+        >
           <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place" />
         </Link>
       </div>
@@ -72,7 +79,10 @@ function Card({ offer, namePage }: CardProp): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={generatePath(AppRoute.Room, { id: String(id) })}>
+          <Link
+            data-testid="title-link"
+            to={generatePath(AppRoute.Room, { id: String(id) })}
+          >
             {title}
           </Link>
         </h2>

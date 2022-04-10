@@ -88,6 +88,7 @@ function CommentForm(): JSX.Element {
         }
       </div>
       <textarea
+        data-testid="review"
         className="reviews__textarea form__textarea"
         id="review"
         name="review"

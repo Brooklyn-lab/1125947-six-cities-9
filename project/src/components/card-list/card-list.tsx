@@ -8,9 +8,13 @@ type CardListProp = {
 
 function CardList({ offers, namePage }: CardListProp): JSX.Element {
   const isMainPage = namePage === 'MainPage';
+  const currentPageClasses = isMainPage ? 'cities__places-list tabs__content' : 'near-places__list';
 
   return (
-    <div className={`${isMainPage ? 'cities__places-list tabs__content' : 'near-places__list'} places__list`}>
+    <div
+      data-testid={`${currentPageClasses}`}
+      className={`${currentPageClasses} places__list`}
+    >
       {offers.map((offer) => <Card key={offer.id} offer={offer} namePage={namePage} />)}
     </div>
   );
