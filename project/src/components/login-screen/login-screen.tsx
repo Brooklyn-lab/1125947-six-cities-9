@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 import { FormEvent, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoute, LOCATIONS } from '../../const';
@@ -20,8 +18,6 @@ function LoginScreen(): JSX.Element {
 
   useEffect(() => {
     setCity(randomCityName());
-    dispatch(changeCity(city));
-    console.log(city);
   }, [city]);
 
   const onSubmit = (authData: AuthData) => {
@@ -82,7 +78,11 @@ function LoginScreen(): JSX.Element {
             </section>
             <section className="locations locations--login locations--current">
               <div className="locations__item">
-                <Link className="locations__item-link" to={AppRoute.Main}>
+                <Link
+                  className="locations__item-link"
+                  to={AppRoute.Main}
+                  onClick={() => dispatch(changeCity(city))}
+                >
                   <span>{city}</span>
                 </Link>
               </div>

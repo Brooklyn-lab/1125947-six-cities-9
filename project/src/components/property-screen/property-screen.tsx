@@ -1,9 +1,7 @@
-/* eslint-disable no-console */
-
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchNearbyOffersAction, fetchSelectedOfferAction } from '../../store/api-actions';
+import { fetchSelectedOfferAction } from '../../store/api-actions';
 import HeaderScreen from '../header/header';
 import LoadingScreen from '../loading-screen/login-screen';
 import Map from '../map/map';
@@ -13,13 +11,14 @@ import ReviewsContainer from '../reviews-container/reviews-container';
 import ButtonFavorite from '../button-favorite/button-favorite';
 
 function PropertyScreen(): JSX.Element {
-  const { id } = useParams();
+  const { id } = useParams<{id: string}>();
   const dispatch = useAppDispatch();
   const { isSelectedOfferLoaded, selectedOffer, nearbyOffers } = useAppSelector(({ OFFER }) => OFFER);
 
   useEffect(() => {
-    dispatch(fetchSelectedOfferAction(String(id)));
-    dispatch(fetchNearbyOffersAction(String(id)));
+    if (id) {
+      dispatch(fetchSelectedOfferAction(id));
+    }
   }, [id, dispatch]);
 
   const { images, isPremium, title, goods, price, host, description, rating, bedrooms, maxAdults, type, isFavorite } = selectedOffer;

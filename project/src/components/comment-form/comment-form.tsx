@@ -41,6 +41,8 @@ function CommentForm(): JSX.Element {
   const [comment, setComment] = useState('');
   const [rating, setRating] = useState(0);
 
+  const isButtonDisabled = (rating === 0 || comment.length < MIN_LENGTH_COMMENT || comment.length > MAX_LENGTH_COMMENT || isFormDisabled);
+
   const getValueHandler = (evt: ChangeEvent<HTMLTextAreaElement>) => {
     setComment(evt.target.value);
   };
@@ -102,7 +104,7 @@ function CommentForm(): JSX.Element {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={rating === 0 || comment.length < MIN_LENGTH_COMMENT || comment.length > MAX_LENGTH_COMMENT || isFormDisabled}
+          disabled={isButtonDisabled}
         >
           Submit
         </button>

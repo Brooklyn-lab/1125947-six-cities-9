@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { NameSpace, typeSort } from '../../const';
 import { Offer } from '../../types/offers';
 import { OffersData } from '../../types/state';
@@ -17,22 +17,23 @@ const initialState: OffersData = {
   offersInCity: [],
   sortOfferType: typeSort.Popular,
   favoriteOffers: [],
+  isFavoriteOffersLoaded: false,
 };
 
 export const offersData = createSlice({
   name: NameSpace.data,
   initialState,
   reducers: {
-    loadOffers: (state, action) => {
+    loadOffers: (state, action: PayloadAction<Offer[]>) => {
       state.offers = action.payload;
       state.isDataLoaded = true;
     },
-    changeCity: (state, action) => {
+    changeCity: (state, action: PayloadAction<string>) => {
       state.offersInCity = [];
       state.offers.find((offer) => (offer.city.name === action.payload) ? state.currentCity = offer.city : null);
       state.offers.filter((offer) => (offer.city.name === action.payload) ? state.offersInCity.push(offer) : []);
     },
-    changeSortOffersType: (state, action) => {
+    changeSortOffersType: (state, action: PayloadAction<string>) => {
       state.sortOfferType = action.payload;
 
       function sortOffers(offers: Offer[], sortType: 'ASC' | 'DESC', key: keyof Pick<Offer, 'id' | 'price' | 'rating'>) {
@@ -54,8 +55,9 @@ export const offersData = createSlice({
           break;
       }
     },
-    loadFavoriteOffers: (state, action) => {
+    loadFavoriteOffers: (state, action: PayloadAction<Offer[]>) => {
       state.favoriteOffers = action.payload;
+      state.isFavoriteOffersLoaded = true;
     },
   },
 });

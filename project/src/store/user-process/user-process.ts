@@ -1,6 +1,4 @@
-/* eslint-disable no-console */
-
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AuthorizationStatus, NameSpace } from '../../const';
 import { UserProcess } from '../../types/state';
 
@@ -14,13 +12,13 @@ export const userProcess = createSlice({
   name: NameSpace.user,
   initialState,
   reducers: {
-    requireAuthorization: (state, action) => {
+    requireAuthorization: (state, action: PayloadAction<AuthorizationStatus>) => {
       state.authorizationStatus = action.payload;
     },
-    getLoginName: (state, action) => {
+    getLoginName: (state, action: PayloadAction<string>) => {
       state.userEmail = action.payload;
     },
-    getSelectedCardId: (state, action) => {
+    getSelectedCardId: (state, action: PayloadAction<number | null>) => {
       state.selectedCardId = action.payload;
     },
   },

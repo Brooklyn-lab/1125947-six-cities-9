@@ -58,7 +58,7 @@ function Map({ location, points, namePage, selectedCard }: MapProps) {
         .setIcon(currentCustomIcon)
         .addTo(map);
     }
-  }, [map, points, selectedCard]);
+  }, [map, points, selectedCard, isPropertyPage]);
 
   return (
     <section className={`${isMainPage ? 'cities__map' : 'property__map'} map`} ref={mapRef} ></section>
