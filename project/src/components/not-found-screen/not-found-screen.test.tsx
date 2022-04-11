@@ -14,12 +14,10 @@ const store = mockStore();
 
 describe('Component: NotFoundScreen', () => {
   it('should render correctly', () => {
-    const history = createMemoryHistory();
-
     render(
       <HistoryRouter history={history}>
         <NotFoundScreen />
-      </HistoryRouter>
+      </HistoryRouter>,
     );
 
     const headerElement = screen.getByText('404. Page not found');
@@ -30,7 +28,7 @@ describe('Component: NotFoundScreen', () => {
   });
 
   it('should render correctly routing on click link title', () => {
-    history.push('/fake')
+    history.push('/fake');
 
     render(
       <Provider store={store}>
@@ -48,7 +46,7 @@ describe('Component: NotFoundScreen', () => {
             />
           </Routes>
         </HistoryRouter>
-      </Provider>
+      </Provider>,
     );
 
     expect(screen.queryByText(/Main page/i)).not.toBeInTheDocument();

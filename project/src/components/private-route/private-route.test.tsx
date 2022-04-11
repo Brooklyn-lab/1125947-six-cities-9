@@ -38,7 +38,7 @@ describe('Component: PrivateRoute', () => {
             />
           </Routes>
         </HistoryRouter>
-      </Provider>
+      </Provider>,
     );
 
     expect(screen.getByText(/Public Route/i)).toBeInTheDocument();
@@ -68,7 +68,7 @@ describe('Component: PrivateRoute', () => {
             />
           </Routes>
         </HistoryRouter>
-      </Provider>
+      </Provider>,
     );
 
     expect(screen.getByText(/Private Route/i)).toBeInTheDocument();

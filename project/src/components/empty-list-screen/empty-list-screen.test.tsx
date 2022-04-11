@@ -1,7 +1,7 @@
-import { render, screen } from "@testing-library/react";
-import { createMemoryHistory } from "history";
-import HistoryRouter from "../history-route/history-route";
-import EmptyListScreen from "./empty-list-screen";
+import { render, screen } from '@testing-library/react';
+import { createMemoryHistory } from 'history';
+import HistoryRouter from '../history-route/history-route';
+import EmptyListScreen from './empty-list-screen';
 
 const currentCity = 'Amsterdam';
 
@@ -12,7 +12,7 @@ describe('Component: EmptyListScreen', () => {
     render(
       <HistoryRouter history={history}>
         <EmptyListScreen currentCity={currentCity} />
-      </HistoryRouter>
+      </HistoryRouter>,
     );
 
     const headerElement = screen.getByText('No places to stay available');

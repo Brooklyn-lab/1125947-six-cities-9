@@ -16,7 +16,7 @@ const mockStore = configureMockStore();
 const history = createMemoryHistory();
 
 describe('Component PropertyScreen', () => {
-  it('should render correctly loading', () => {
+  it('should render correctly', () => {
     const store = mockStore({
       USER: {
         authorizationStatus: AuthorizationStatus.Auth,
@@ -39,7 +39,6 @@ describe('Component PropertyScreen', () => {
     );
 
     expect(screen.getByText(/Property/i)).toBeInTheDocument();
-    expect(screen.queryAllByTestId('property-screen'));
     expect(screen.getByTestId('loading-screen')).toBeInTheDocument();
   });
 
@@ -65,7 +64,6 @@ describe('Component PropertyScreen', () => {
       </Provider>,
     );
 
-    expect(screen.queryAllByTestId('loading-screen'));
     expect(screen.getByText(/Property/i)).toBeInTheDocument();
   });
 });

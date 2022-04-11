@@ -22,7 +22,6 @@ describe('Component LoginScreen', () => {
     expect(screen.getByTestId(/password/i)).toBeInTheDocument();
     expect(screen.getByTestId(/login-title/i)).toBeInTheDocument();
     expect(screen.getByTestId(/login-button/i)).toBeInTheDocument();
-    expect(screen.queryByAltText(/Sign out/i));
     fireEvent.click(screen.getByTestId('locations__item-link'));
   });
 });

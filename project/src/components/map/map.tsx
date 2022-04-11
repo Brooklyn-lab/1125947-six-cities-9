@@ -64,8 +64,7 @@ function Map({ location, points, namePage, selectedCard }: MapProps) {
     <section
       data-testid={`${isMainPage ? 'cities__map' : 'property__map'}`}
       className={`${isMainPage ? 'cities__map' : 'property__map'} map`}
-      ref={mapRef}
-    ></section>
+      ref={mapRef}></section>
   );
 }
 

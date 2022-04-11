@@ -42,6 +42,5 @@ describe('Component MainScreen', () => {
     expect(screen.getByText(/Cities/i)).toBeInTheDocument();
     expect(screen.getByText(/No places to stay available/i)).toBeInTheDocument();
     expect(screen.getByTestId('logo-link')).toBeInTheDocument();
-    expect(screen.queryAllByTestId('cities__map'));
   });
 });

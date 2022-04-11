@@ -34,7 +34,7 @@ describe('Component FavoriteCard', () => {
   });
 
   it('should render correctly routing on click link image', () => {
-    history.push('/fake')
+    history.push('/fake');
 
     render(
       <Provider store={store}>
@@ -52,7 +52,7 @@ describe('Component FavoriteCard', () => {
             />
           </Routes>
         </HistoryRouter>
-      </Provider>
+      </Provider>,
     );
 
     expect(screen.queryByText(/Offer page/i)).not.toBeInTheDocument();
@@ -61,7 +61,7 @@ describe('Component FavoriteCard', () => {
   });
 
   it('should render correctly routing on click link title', () => {
-    history.push('/fake')
+    history.push('/fake');
 
     render(
       <Provider store={store}>
@@ -79,7 +79,7 @@ describe('Component FavoriteCard', () => {
             />
           </Routes>
         </HistoryRouter>
-      </Provider>
+      </Provider>,
     );
 
     expect(screen.queryByText(/Offer page/i)).not.toBeInTheDocument();

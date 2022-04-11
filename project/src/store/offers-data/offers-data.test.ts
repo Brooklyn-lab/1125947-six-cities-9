@@ -32,7 +32,7 @@ describe('Reducer: OffersData', () => {
   });
 
   it('should update changeCity when changeCity changes', () => {
-    const state: OffersData = {
+    const stateData: OffersData = {
       offers: [],
       isDataLoaded: false,
       currentCity: {
@@ -49,7 +49,7 @@ describe('Reducer: OffersData', () => {
       isFavoriteOffersLoaded: false,
     };
 
-    expect(offersData.reducer(state, changeCity('Amsterdam')))
+    expect(offersData.reducer(stateData, changeCity('Amsterdam')))
       .toEqual({
         offers: [],
         isDataLoaded: false,
@@ -65,7 +65,7 @@ describe('Reducer: OffersData', () => {
         sortOfferType: typeSort.Popular,
         favoriteOffers: [],
         isFavoriteOffersLoaded: false,
-      })
+      });
   });
 
   it('should update sortOfferType when change type popular', () => {

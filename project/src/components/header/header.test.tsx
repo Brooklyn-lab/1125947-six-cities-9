@@ -19,7 +19,7 @@ describe('Component Header', () => {
         userEmail: internet.email,
       },
     });
-    history.push('/fake')
+    history.push('/fake');
 
     render(
       <Provider store={store}>
@@ -35,7 +35,7 @@ describe('Component Header', () => {
             />
           </Routes>
         </HistoryRouter>
-      </Provider>
+      </Provider>,
     );
 
     expect(screen.queryByText(/Maine page/i)).not.toBeInTheDocument();
@@ -56,7 +56,7 @@ describe('Component Header', () => {
         <HistoryRouter history={history}>
           <Header namePage='LoginPage' />
         </HistoryRouter>
-      </Provider>
+      </Provider>,
     );
 
     expect(screen.queryByText(/Sign in/i)).not.toBeInTheDocument();
@@ -75,7 +75,7 @@ describe('Component Header', () => {
         <HistoryRouter history={history}>
           <Header />
         </HistoryRouter>
-      </Provider>
+      </Provider>,
     );
 
     expect(screen.getByText(/Sign out/i)).toBeInTheDocument();

@@ -23,7 +23,7 @@ describe('Component: Footer', () => {
             element={<Footer />}
           />
         </Routes>
-      </HistoryRouter>
+      </HistoryRouter>,
     );
 
     fireEvent.click(screen.getByRole('link'));

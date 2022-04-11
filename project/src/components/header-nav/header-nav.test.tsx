@@ -13,7 +13,7 @@ const mockStore = configureMockStore();
 const history = createMemoryHistory();
 
 describe('Component HeaderNav', () => {
-  it('should render Auth HeaderNav', () => {
+  it('should render HeaderNav', () => {
     const store = mockStore({
       USER: {
         authorizationStatus: AuthorizationStatus.Auth,

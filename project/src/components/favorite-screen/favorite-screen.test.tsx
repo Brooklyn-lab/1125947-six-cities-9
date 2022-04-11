@@ -39,7 +39,6 @@ describe('Component FavoriteScreen', () => {
       </Provider>,
     );
 
-    expect(screen.queryByText('Saved listing'));
     expect(screen.getByTestId('loading-screen')).toBeInTheDocument();
   });
 
@@ -67,7 +66,6 @@ describe('Component FavoriteScreen', () => {
       </Provider>,
     );
 
-    expect(screen.queryByText('Saved listing'));
     expect(screen.getByText(/Nothing yet saved./i)).toBeInTheDocument();
     expect(screen.getByText(/Save properties to narrow down search or plan your future trips./i)).toBeInTheDocument();
   });
@@ -95,8 +93,6 @@ describe('Component FavoriteScreen', () => {
       </Provider>,
     );
 
-    expect(screen.queryByText(/Nothing yet saved./i));
-    expect(screen.queryAllByTestId('loading-screen'));
     expect(screen.getByText(/Saved listing/i)).toBeInTheDocument();
   });
 });

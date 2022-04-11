@@ -10,7 +10,7 @@ describe('Component FavoritesEmptyScreen', () => {
     render(
       <HistoryRouter history={history}>
         <FavoritesEmptyScreen />
-      </HistoryRouter>
+      </HistoryRouter>,
     );
 
     const headerElement = screen.getByText('Favorites (empty)');

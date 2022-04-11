@@ -52,7 +52,7 @@ describe('Component Card', () => {
 
   it('should render correctly routing on click link image', () => {
     const namePage = 'MainPage';
-    history.push('/fake')
+    history.push('/fake');
 
     render(
       <Provider store={store}>
@@ -70,7 +70,7 @@ describe('Component Card', () => {
             />
           </Routes>
         </HistoryRouter>
-      </Provider>
+      </Provider>,
     );
 
     expect(screen.queryByText(/Offer page/i)).not.toBeInTheDocument();
@@ -80,7 +80,7 @@ describe('Component Card', () => {
 
   it('should render correctly routing on click link title', () => {
     const namePage = 'MainPage';
-    history.push('/fake')
+    history.push('/fake');
 
     render(
       <Provider store={store}>
@@ -98,7 +98,7 @@ describe('Component Card', () => {
             />
           </Routes>
         </HistoryRouter>
-      </Provider>
+      </Provider>,
     );
 
     expect(screen.queryByText(/Offer page/i)).not.toBeInTheDocument();
