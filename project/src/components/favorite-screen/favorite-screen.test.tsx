@@ -70,7 +70,7 @@ describe('Component FavoriteScreen', () => {
     expect(screen.getByText(/Save properties to narrow down search or plan your future trips./i)).toBeInTheDocument();
   });
 
-  it('should render correctly loading', () => {
+  it('should render correctly loading when favoriteOffers', () => {
     const dispatch = jest.fn();
     const useDispatch = jest.spyOn(Redux, 'useDispatch');
     useDispatch.mockReturnValue(dispatch);

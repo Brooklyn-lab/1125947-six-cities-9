@@ -29,7 +29,7 @@ describe('Component ReviewsContainer', () => {
         <HistoryRouter history={history}>
           <ReviewsContainer />
         </HistoryRouter>
-      </Provider>
+      </Provider>,
     );
 
     expect(screen.getByText(/Your review/i)).toBeInTheDocument();
@@ -52,7 +52,7 @@ describe('Component ReviewsContainer', () => {
         <HistoryRouter history={history}>
           <ReviewsContainer />
         </HistoryRouter>
-      </Provider>
+      </Provider>,
     );
 
     expect(screen.queryByText(/Your review/i)).not.toBeInTheDocument();
@@ -75,7 +75,7 @@ describe('Component ReviewsContainer', () => {
         <HistoryRouter history={history}>
           <ReviewsContainer />
         </HistoryRouter>
-      </Provider>
+      </Provider>,
     );
 
     expect(screen.queryByText(/Reviews/i)).not.toBeInTheDocument();
