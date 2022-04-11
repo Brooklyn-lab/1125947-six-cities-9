@@ -58,7 +58,7 @@ export const toggleFavoriteStatusAction = createAsyncThunk<void, FavoriteStatus,
   async ({ id, status }, { dispatch, extra: api }) => {
     try {
       const { data } = await api.post(`${APIRoute.Favorites}/${id}/${status}`);
-      return data;
+      dispatch(toggleFavoriteStatus(data));
     } catch (error) {
       errorHandle(error);
     }
