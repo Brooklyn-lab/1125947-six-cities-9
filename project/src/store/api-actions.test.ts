@@ -7,14 +7,13 @@ import { createAPI } from '../services/api';
 import { State } from '../types/state';
 import { APIRoute } from '../const';
 import { checkAuthAction, fetchFavoritesAction, fetchOffersAction, fetchSelectedOfferAction, loginAction, sendCommentAction, toggleFavoriteStatusAction } from './api-actions';
-// import { logoutAction } from './api-actions';
+import { logoutAction } from './api-actions';
 import { getLoginName, requireAuthorization } from './user-process/user-process';
 import { AuthData } from '../types/auth-data';
 import { redirectToRoute } from './action';
 import { makeFakeOffers } from '../utils/mocks';
 import { changeCity, loadFavoriteOffers, loadOffers } from './offers-data/offers-data';
 import { fetchSelectedOffer } from './offer-data/offer-data';
-// import { isFormEnabled } from './offer-data/offer-data';
 
 describe('Async actions', () => {
   const api = createAPI();
@@ -118,42 +117,39 @@ describe('Async actions', () => {
     expect(actions).toContain(requireAuthorization.toString());
   });
 
-  it('should dispatch RequriedAuthorization and RedirectToRoute when POST /login', async () => {
-    const fakeUser: AuthData = { login: 'test@test.ua', password: '123456' };
-    const store = mockStore();
-    mockAPI
-      .onPost(APIRoute.Login)
-      .reply(200, { token: 'secret' });
+  describe('Login and Logout actions', () => {
+    it('should dispatch RequriedAuthorization and RedirectToRoute when POST /login', async () => {
+      const fakeUser: AuthData = { login: 'test@test.ua', password: '123456' };
+      const store = mockStore();
+      mockAPI
+        .onPost(APIRoute.Login)
+        .reply(200, { token: 'secret' });
 
-    Storage.prototype.setItem = jest.fn();
+      Storage.prototype.setItem = jest.fn();
 
-    await store.dispatch(loginAction(fakeUser));
+      await store.dispatch(loginAction(fakeUser));
 
-    const action = store.getActions().map(({ type }) => type);
+      const action = store.getActions().map(({ type }) => type);
 
-    expect(action).toContain(requireAuthorization.toString());
-    expect(action).toContain(redirectToRoute.toString());
-    expect(action).toContain(getLoginName.toString());
-    expect(Storage.prototype.setItem).toBeCalledTimes(2);
-    expect(Storage.prototype.setItem).toBeCalledWith('guess-cities-token', 'secret');
+      expect(action).toContain(requireAuthorization.toString());
+      expect(action).toContain(redirectToRoute.toString());
+      expect(action).toContain(getLoginName.toString());
+      expect(Storage.prototype.setItem).toBeCalledWith('guess-cities-token', 'secret');
+    });
+
+    it('should dispatch Logout when Delete /logout', async () => {
+      mockAPI
+        .onDelete(APIRoute.Logout)
+        .reply(204);
+
+      const store = mockStore();
+
+      await store.dispatch(logoutAction());
+
+      const actions = store.getActions().map(({ type }) => type);
+
+      expect(actions).toContain(requireAuthorization.toString());
+      expect(actions).toContain(redirectToRoute.toString());
+    });
   });
-
-  // it('should dispatch Logout when Delete /logout', async () => {
-  //   mockAPI
-  //     .onDelete(APIRoute.Logout)
-  //     .reply(204);
-
-  //   const store = mockStore();
-  //   Storage.prototype.removeItem = jest.fn();
-
-  //   await store.dispatch(logoutAction());
-
-  //   const actions = store.getActions().map(({ type }) => type);
-
-  //   expect(actions).toContain(requireAuthorization.toString());
-  //   expect(actions).toContain(redirectToRoute.toString());
-  //   expect(Storage.prototype.removeItem).toBeCalledTimes(1);
-  //   expect(Storage.prototype.removeItem).toBeCalledWith('guess-melody-token');
-  //   expect(Storage.prototype.removeItem).toBeCalledWith('user-email');
-  // });
 });

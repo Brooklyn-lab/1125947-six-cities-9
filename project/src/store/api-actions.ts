@@ -8,7 +8,7 @@ import { Review } from '../types/review';
 import { UserData } from '../types/user-data';
 import { redirectToRoute } from './action';
 import { getLoginName, requireAuthorization } from './user-process/user-process';
-import { loadOffers, changeCity, loadFavoriteOffers } from './offers-data/offers-data';
+import { loadOffers, changeCity, loadFavoriteOffers, toggleFavoriteStatus } from './offers-data/offers-data';
 import { fetchSelectedOffer, isFormEnabled } from './offer-data/offer-data';
 import { SendComment } from '../types/send-comment';
 import { FavoriteStatus } from '../types/favorite-status';
@@ -55,9 +55,10 @@ export const toggleFavoriteStatusAction = createAsyncThunk<void, FavoriteStatus,
   extra: AxiosInstance
 }>(
   'data/toggleFavoriteStatus',
-  async ({ id, status }, { extra: api }) => {
+  async ({ id, status }, { dispatch, extra: api }) => {
     try {
-      await api.post(`${APIRoute.Favorites}/${id}/${status}`);
+      const { data } = await api.post(`${APIRoute.Favorites}/${id}/${status}`);
+      dispatch(toggleFavoriteStatus(data));
     } catch (error) {
       errorHandle(error);
     }
@@ -77,7 +78,7 @@ export const fetchSelectedOfferAction = createAsyncThunk<void, string, {
         api.get<Offer[]>(`${APIRoute.Hotels}/${id}/nearby`),
         api.get<Review[]>(`${APIRoute.Comments}/${id}`),
       ]);
-      dispatch(fetchSelectedOffer({offer, offersNearby, comments}));
+      dispatch(fetchSelectedOffer({ offer, offersNearby, comments }));
     } catch (error) {
       errorHandle(error);
     }

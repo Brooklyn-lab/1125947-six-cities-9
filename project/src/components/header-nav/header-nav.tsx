@@ -24,6 +24,7 @@ function HeaderNav(): JSX.Element {
             </li>
             <li className="header__nav-item">
               <Link
+                data-testid="signOut-link"
                 className="header__nav-link"
                 to={AppRoute.SignIn}
                 onClick={(evt) => {

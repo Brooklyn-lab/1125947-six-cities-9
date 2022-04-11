@@ -9,9 +9,9 @@ function CityList(): JSX.Element {
   const [activeLocation, setActiveLocation] = useState(currentCity.name);
 
   return (
-    <div className="tabs">
+    <div data-testid="tabs" className="tabs">
       <section className="locations container">
-        <ul className="locations__list tabs__list">
+        <ul data-testid="locations__list" className="locations__list tabs__list">
           {
             LOCATIONS.map((locationItem) => (
               <li className="locations__item"

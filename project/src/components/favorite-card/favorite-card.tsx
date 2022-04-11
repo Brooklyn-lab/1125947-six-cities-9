@@ -19,7 +19,7 @@ function FavoriteCard({ offer }: FavoriteCardProp): JSX.Element {
   };
 
   return (
-    <article className="favorites__card place-card" onMouseEnter={onMouseEnterHandler}>
+    <article data-testid="favorites__card" className="favorites__card place-card" onMouseEnter={onMouseEnterHandler}>
       {
         isPremium &&
         <div className="place-card__mark">
@@ -27,14 +27,17 @@ function FavoriteCard({ offer }: FavoriteCardProp): JSX.Element {
         </div>
       }
       <div className="favorites__image-wrapper place-card__image-wrapper">
-        <Link to={generatePath(AppRoute.Room, { id: String(activeCard) })}>
-          <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place" />
+        <Link
+          data-testid="image-link"
+          to={generatePath(AppRoute.Room, { id: String(activeCard) })}
+        >
+          <img data-testid="place-card__image" className="place-card__image" src={previewImage} width="260" height="200" alt="Place" />
         </Link>
       </div>
       <div className="favorites__card-info place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
-            <b className="place-card__price-value">&euro;{price}</b>
+            <b data-testid="place-card__price-value" className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <ButtonFavorite
@@ -47,11 +50,14 @@ function FavoriteCard({ offer }: FavoriteCardProp): JSX.Element {
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
             <span style={{ width: getRating(rating) }}></span>
-            <span className="visually-hidden">Rating</span>
+            <span data-testid="place-card__rating" className="visually-hidden">Rating</span>
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={generatePath(AppRoute.Room, { id: String(activeCard) })}>
+          <Link
+            data-testid="title-link"
+            to={generatePath(AppRoute.Room, { id: String(activeCard) })}
+          >
             {title}
           </Link>
         </h2>

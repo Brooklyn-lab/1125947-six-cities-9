@@ -44,7 +44,12 @@ function LoginScreen(): JSX.Element {
         <main className="page__main page__main--login">
           <div className="page__login-container container">
             <section className="login">
-              <h1 className="login__title">Sign in</h1>
+              <h1
+                data-testid="login-title"
+                className="login__title"
+              >
+                Sign in
+              </h1>
               <form
                 onSubmit={handleSubmit}
                 className="login__form form"
@@ -52,7 +57,12 @@ function LoginScreen(): JSX.Element {
                 method="post"
               >
                 <div className="login__input-wrapper form__input-wrapper">
-                  <label className="visually-hidden">E-mail</label>
+                  <label
+                    data-testid="email"
+                    className="visually-hidden"
+                  >
+                    E-mail
+                  </label>
                   <input
                     ref={loginRef}
                     className="login__input form__input"
@@ -63,7 +73,12 @@ function LoginScreen(): JSX.Element {
                   />
                 </div>
                 <div className="login__input-wrapper form__input-wrapper">
-                  <label className="visually-hidden">Password</label>
+                  <label
+                    data-testid="password"
+                    className="visually-hidden"
+                  >
+                    Password
+                  </label>
                   <input
                     ref={passwordRef}
                     className="login__input form__input"
@@ -73,12 +88,19 @@ function LoginScreen(): JSX.Element {
                     required
                   />
                 </div>
-                <button className="login__submit form__submit button" type="submit">Sign in</button>
+                <button
+                  data-testid="login-button"
+                  className="login__submit form__submit button"
+                  type="submit"
+                >
+                  Sign in
+                </button>
               </form>
             </section>
             <section className="locations locations--login locations--current">
               <div className="locations__item">
                 <Link
+                  data-testid="locations__item-link"
                   className="locations__item-link"
                   to={AppRoute.Main}
                   onClick={() => dispatch(changeCity(city))}

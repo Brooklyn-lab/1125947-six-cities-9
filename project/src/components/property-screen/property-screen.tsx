@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchSelectedOfferAction } from '../../store/api-actions';
 import HeaderScreen from '../header/header';
-import LoadingScreen from '../loading-screen/login-screen';
+import LoadingScreen from '../loading-screen/loading-screen';
 import Map from '../map/map';
 import CardList from '../card-list/card-list';
 import { getRating, toCapitalLetter } from '../../utils/utils';
@@ -11,7 +11,7 @@ import ReviewsContainer from '../reviews-container/reviews-container';
 import ButtonFavorite from '../button-favorite/button-favorite';
 
 function PropertyScreen(): JSX.Element {
-  const { id } = useParams<{id: string}>();
+  const { id } = useParams();
   const dispatch = useAppDispatch();
   const { isSelectedOfferLoaded, selectedOffer, nearbyOffers } = useAppSelector(({ OFFER }) => OFFER);
 
@@ -26,6 +26,7 @@ function PropertyScreen(): JSX.Element {
 
   return (
     <div className="page">
+      <p className="visually-hidden">Property</p>
       {(!isSelectedOfferLoaded) ?
         <LoadingScreen />
         :
@@ -33,7 +34,10 @@ function PropertyScreen(): JSX.Element {
           <HeaderScreen />
 
           <main className="page__main page__main--property">
-            <section className="property">
+            <section
+              data-testid="property-screen"
+              className="property"
+            >
               <div className="property__gallery-container container">
                 <div className="property__gallery">
                   {images.map((image) => (
@@ -114,7 +118,12 @@ function PropertyScreen(): JSX.Element {
                   <ReviewsContainer />
                 </div>
               </div>
-              <Map location={selectedOffer.city.location} points={nearbyOffers} namePage='PropertyPage' selectedCard={selectedOffer} />
+              <Map
+                location={selectedOffer.city.location}
+                points={nearbyOffers}
+                namePage='PropertyPage'
+                selectedCard={selectedOffer}
+              />
             </section>
             <div className="container">
               <section className="near-places places">

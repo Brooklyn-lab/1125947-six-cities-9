@@ -7,7 +7,7 @@ import { AppRoute } from '../../const';
 import { useEffect } from 'react';
 import { fetchFavoritesAction } from '../../store/api-actions';
 import FavoritesEmptyScreen from '../favorites-empty-screen/favorites-empty-screen';
-import LoadingScreen from '../loading-screen/login-screen';
+import LoadingScreen from '../loading-screen/loading-screen';
 
 function FavoriteScreen() {
   const { favoriteOffers, isFavoriteOffersLoaded } = useAppSelector(({ DATA }) => DATA);
