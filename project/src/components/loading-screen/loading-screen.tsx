@@ -10,7 +10,10 @@ const styleLoaderWrapper = {
 
 function LoadingScreen(): JSX.Element {
   return (
-    <div style={styleLoaderWrapper}>
+    <div
+      data-testid="loading-screen"
+      style={styleLoaderWrapper}
+    >
       <ClipLoader color={'#3667D7'} loading size={60} />
     </div>
   );

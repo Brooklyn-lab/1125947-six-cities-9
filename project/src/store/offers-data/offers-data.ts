@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { NameSpace, typeSort } from '../../const';
 import { Offer } from '../../types/offers';
@@ -59,7 +61,12 @@ export const offersData = createSlice({
       state.favoriteOffers = action.payload;
       state.isFavoriteOffersLoaded = true;
     },
+    toggleFavoriteStatus: (state, action: PayloadAction<Offer>) => {
+      console.log(action.payload);
+
+      state.offers = state.offers.map((offer) => offer.id === action.payload.id ? action.payload : offer);
+    },
   },
 });
 
-export const { loadOffers, changeCity, changeSortOffersType, loadFavoriteOffers } = offersData.actions;
+export const { loadOffers, changeCity, changeSortOffersType, loadFavoriteOffers, toggleFavoriteStatus } = offersData.actions;

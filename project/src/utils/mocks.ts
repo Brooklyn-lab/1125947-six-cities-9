@@ -76,11 +76,11 @@ export const makeFakeOffer = (): Offer => ({
 
 export const makeFakeCurrentCity = (): City => ({
   location: {
-    latitude: datatype.float(),
-    longitude: datatype.float(),
-    zoom: datatype.number(),
+    latitude: 50.123456789,
+    longitude: 5.123456789,
+    zoom: 10,
   },
-  name: address.city(),
+  name: 'Amsterdam',
 });
 
 export const makeFakeReview = (amount = AMOUNT): Review[] => Array.from(Array(amount), () => ({

@@ -2,11 +2,11 @@ import { typeSort } from '../../const';
 import { OffersData } from '../../types/state';
 import { makeFakeCurrentCity, makeFakeOffers } from '../../utils/mocks';
 import { changeSortOffersType, offersData, loadOffers, loadFavoriteOffers } from './offers-data';
-// import { changeCity } from './offers-data';
-
+import { changeCity } from './offers-data';
 
 const mockCurrentCity = makeFakeCurrentCity();
 const mockOffers = makeFakeOffers();
+
 const state: OffersData = {
   offers: [],
   isDataLoaded: false,
@@ -31,21 +31,42 @@ describe('Reducer: OffersData', () => {
       });
   });
 
-  // it('should update changeCity when changeCity changes', () => {
-  //   const newCurrentCity = makeFakeOffers();
-  //   const newOffersInCity = mockOffers;
+  it('should update changeCity when changeCity changes', () => {
+    const state: OffersData = {
+      offers: [],
+      isDataLoaded: false,
+      currentCity: {
+        location: {
+          latitude: 50.123456789,
+          longitude: 5.123456789,
+          zoom: 10,
+        },
+        name: 'Amsterdam',
+      },
+      offersInCity: [],
+      sortOfferType: typeSort.Popular,
+      favoriteOffers: [],
+      isFavoriteOffersLoaded: false,
+    };
 
-  //   expect(offersData.reducer(state, changeCity('Amsterdam')))
-  //     .toEqual({
-  //       offers: [],
-  //       isDataLoaded: false,
-  //       currentCity: newCurrentCity,
-  //       offersInCity: newOffersInCity,
-  //       sortOfferType: typeSort.Popular,
-  //       favoriteOffers: [],
-  //       isFavoriteOffersLoaded: false,
-  //     })
-  // });
+    expect(offersData.reducer(state, changeCity('Amsterdam')))
+      .toEqual({
+        offers: [],
+        isDataLoaded: false,
+        currentCity: {
+          location: {
+            latitude: 50.123456789,
+            longitude: 5.123456789,
+            zoom: 10,
+          },
+          name: 'Amsterdam',
+        },
+        offersInCity: [],
+        sortOfferType: typeSort.Popular,
+        favoriteOffers: [],
+        isFavoriteOffersLoaded: false,
+      })
+  });
 
   it('should update sortOfferType when change type popular', () => {
     expect(offersData.reducer(state, changeSortOffersType('Popular')))

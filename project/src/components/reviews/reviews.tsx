@@ -8,7 +8,10 @@ type ReviewsProps = {
 
 function Reviews({ reviews }: ReviewsProps): JSX.Element {
   return (
-    <ul className="reviews__list">
+    <ul
+      data-testid='reviews__list'
+      className="reviews__list"
+    >
       {reviews.map((review) => {
         const { id, comment, user, rating, date } = review;
 
@@ -18,7 +21,9 @@ function Reviews({ reviews }: ReviewsProps): JSX.Element {
               <div className="reviews__avatar-wrapper user__avatar-wrapper">
                 <img className="reviews__avatar user__avatar" src={user.avatarUrl} width="54" height="54" alt="Reviews avatar" />
               </div>
-              <span className="reviews__user-name">
+              <span
+                className="reviews__user-name"
+              >
                 {user.name}
               </span>
             </div>
