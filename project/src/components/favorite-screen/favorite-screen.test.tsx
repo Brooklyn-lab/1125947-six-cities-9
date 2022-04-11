@@ -42,7 +42,7 @@ describe('Component FavoriteScreen', () => {
     expect(screen.getByTestId('loading-screen')).toBeInTheDocument();
   });
 
-  it('should render correctly loading', () => {
+  it('should render correctly loading when not favoriteOffers', () => {
     const dispatch = jest.fn();
     const useDispatch = jest.spyOn(Redux, 'useDispatch');
     useDispatch.mockReturnValue(dispatch);
