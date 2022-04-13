@@ -3,8 +3,16 @@ import { createMemoryHistory } from 'history';
 import HistoryRouter from '../history-route/history-route';
 import LoginScreen from './login-screen';
 import * as Redux from 'react-redux';
+import { Provider } from 'react-redux';
+import { configureMockStore } from '@jedmao/redux-mock-store';
+import { AuthorizationStatus } from '../../const';
 
+const mockStore = configureMockStore();
 const history = createMemoryHistory();
+
+const store = mockStore({
+  USER: { authorizationStatus: AuthorizationStatus.Auth },
+});
 
 describe('Component LoginScreen', () => {
   it('should render correctly when not Offers', () => {
@@ -13,9 +21,11 @@ describe('Component LoginScreen', () => {
     useDispatch.mockReturnValue(dispatch);
 
     render(
-      <HistoryRouter history={history}>
-        <LoginScreen />
-      </HistoryRouter>,
+      <Provider store={store}>
+        <HistoryRouter history={history}>
+          <LoginScreen />
+        </HistoryRouter>
+      </Provider>,
     );
 
     expect(screen.getByTestId(/email/i)).toBeInTheDocument();

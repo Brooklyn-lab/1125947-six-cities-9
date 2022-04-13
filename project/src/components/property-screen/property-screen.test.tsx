@@ -38,7 +38,6 @@ describe('Component PropertyScreen', () => {
       </Provider>,
     );
 
-    expect(screen.getByText(/Property/i)).toBeInTheDocument();
     expect(screen.getByTestId('loading-screen')).toBeInTheDocument();
   });
 

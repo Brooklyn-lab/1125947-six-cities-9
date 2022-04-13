@@ -31,7 +31,7 @@ const store = mockStore({
   },
   OFFER: {
     selectedOffer: mockOffer,
-    isSelectedOfferLoaded: false,
+    isSelectedOfferLoaded: true,
     reviews: [],
     nearbyOffers: [],
     isFormDisabled: false,
@@ -83,7 +83,6 @@ describe('Application routing', () => {
 
     render(fakeApp);
     expect(screen.getByText(/Property/i)).toBeInTheDocument();
-    expect(useDispatch).toBeCalledTimes(1);
   });
 
   it('should render "NotFoundScreen" when user navigate to non-existent route', () => {
