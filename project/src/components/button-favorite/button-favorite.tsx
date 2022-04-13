@@ -1,18 +1,20 @@
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { redirectToRoute } from '../../store/action';
-import { toggleFavoriteStatusAction } from '../../store/api-actions';
+import { fetchSelectedOfferAction, toggleFavoriteStatusAction } from '../../store/api-actions';
+import { toggleFavoriteStatusOnFavPage } from '../../store/offers-data/offers-data';
 
 type ButtonFavoriteProps = {
   size: 'Big' | 'Small',
   isFavorite: boolean,
   hotelId: number,
-  type: 'Place' | 'Property'
+  type: 'Place' | 'Property',
+  favoritePage?: 'Favorite',
 }
 
 enum classNameButton {
   Property = 'property',
-  Place = 'place-card'
+  Place = 'place-card',
 }
 
 const markSize = {
@@ -26,7 +28,7 @@ const markSize = {
   },
 };
 
-function ButtonFavorite({ size, isFavorite, hotelId, type }: ButtonFavoriteProps): JSX.Element {
+function ButtonFavorite({ size, isFavorite, hotelId, type, favoritePage }: ButtonFavoriteProps): JSX.Element {
   const { authorizationStatus } = useAppSelector(({ USER }) => USER);
   const dispatch = useAppDispatch();
   const iconSize = markSize[size];
@@ -44,6 +46,12 @@ function ButtonFavorite({ size, isFavorite, hotelId, type }: ButtonFavoriteProps
       dispatch(toggleFavoriteStatusAction(favoriteData));
     } else {
       dispatch(redirectToRoute(AppRoute.SignIn));
+    }
+
+    if (favoritePage === 'Favorite') {
+      dispatch(toggleFavoriteStatusOnFavPage(hotelId));
+    } else if (type === 'Property') {
+      dispatch(fetchSelectedOfferAction(String(hotelId)));
     }
   };
 

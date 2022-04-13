@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import { fetchFavoritesAction } from '../../store/api-actions';
 import FavoritesEmptyScreen from '../favorites-empty-screen/favorites-empty-screen';
 import LoadingScreen from '../loading-screen/loading-screen';
+import { Offer } from '../../types/offers';
 
 function FavoriteScreen() {
   const { favoriteOffers, isFavoriteOffersLoaded } = useAppSelector(({ DATA }) => DATA);
@@ -17,11 +18,22 @@ function FavoriteScreen() {
 
   useEffect(() => {
     dispatch(fetchFavoritesAction());
-  });
+  }, [dispatch]);
 
   if (!isFavoriteOffersLoaded) {
     return (<LoadingScreen />);
   }
+
+  const sortedOffers = favoriteOffers.reduce((acc: { [cityName: string]: Offer[] }, offer: Offer) => {
+    const cityName = offer.city.name;
+    if (!acc[cityName]) {
+      acc[cityName] = [];
+    }
+    acc[cityName].push(offer);
+    return acc;
+  }, {});
+  const locationsData = Object.keys(sortedOffers).sort()
+    .map((cityName: string) => ({ cityName, offers: sortedOffers[cityName] }));
 
   return (
     <div className={`page ${favoriteLenght ? 'page--favorites-empty' : ''}`}>
@@ -37,17 +49,19 @@ function FavoriteScreen() {
                 <h1 className="favorites__title">Saved listing</h1>
                 <ul className="favorites__list">
                   {
-                    favoriteOffers.map((offer) => (
-                      <li key={offer.id} className="favorites__locations-items">
+                    locationsData.map((location) => (
+                      <li key={location.cityName} className="favorites__locations-items">
                         <div className="favorites__locations locations locations--current">
                           <div className="locations__item">
                             <Link className="locations__item-link" to={AppRoute.Main}>
-                              <span>{offer.city.name}</span>
+                              <span>{location.cityName}</span>
                             </Link>
                           </div>
                         </div>
                         <div className="favorites__places">
-                          <FavoriteCard key={offer.id} offer={offer} />
+                          {location.offers.map((offer) => (
+                            <FavoriteCard key={offer.id} offer={offer} />
+                          ))}
                         </div>
                       </li>
                     ))

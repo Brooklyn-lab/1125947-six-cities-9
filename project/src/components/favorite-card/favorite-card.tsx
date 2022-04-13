@@ -45,6 +45,7 @@ function FavoriteCard({ offer }: FavoriteCardProp): JSX.Element {
             hotelId={id}
             isFavorite={isFavorite}
             type='Place'
+            favoritePage='Favorite'
           />
         </div>
         <div className="place-card__rating rating">

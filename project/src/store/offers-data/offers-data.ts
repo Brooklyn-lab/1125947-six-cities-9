@@ -62,7 +62,10 @@ export const offersData = createSlice({
     toggleFavoriteStatus: (state, action: PayloadAction<Offer>) => {
       state.offersInCity = state.offersInCity.map((offer) => offer.id === action.payload.id ? action.payload : offer);
     },
+    toggleFavoriteStatusOnFavPage: (state, action: PayloadAction<number>) => {
+      state.favoriteOffers = state.favoriteOffers.filter((offer) => offer.id !== action.payload);
+    },
   },
 });
 
-export const { loadOffers, changeCity, changeSortOffersType, loadFavoriteOffers, toggleFavoriteStatus } = offersData.actions;
+export const { loadOffers, changeCity, changeSortOffersType, loadFavoriteOffers, toggleFavoriteStatus, toggleFavoriteStatusOnFavPage } = offersData.actions;
