@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { APIRoute, AppRoute, AuthorizationStatus, LOCATIONS } from '../const';
+import { APIRoute, AppRoute, AuthorizationStatus, DEFAULT_PROPERTY_DATA, LOCATIONS } from '../const';
 import { errorHandle } from '../services/error-handle';
 import { dropToken, saveToken } from '../services/token';
 import { AuthData } from '../types/auth-data';
@@ -81,6 +81,7 @@ export const fetchSelectedOfferAction = createAsyncThunk<void, string, {
       dispatch(fetchSelectedOffer({ offer, offersNearby, comments }));
     } catch (error) {
       errorHandle(error);
+      dispatch(fetchSelectedOffer(DEFAULT_PROPERTY_DATA));
     }
   },
 );
@@ -126,7 +127,7 @@ export const loginAction = createAsyncThunk<void, AuthData, {
   extra: AxiosInstance
 }>(
   'user/login',
-  async ({ login: email, password }, { dispatch, extra: api }) => {
+  async ({ email, password }, { dispatch, extra: api }) => {
     try {
       const { data: { token } } = await api.post<UserData>(APIRoute.Login, { email, password });
       saveToken(token);

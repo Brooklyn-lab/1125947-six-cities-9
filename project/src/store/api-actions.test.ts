@@ -119,7 +119,7 @@ describe('Async actions', () => {
 
   describe('Login and Logout actions', () => {
     it('should dispatch RequriedAuthorization and RedirectToRoute when POST /login', async () => {
-      const fakeUser: AuthData = { login: 'test@test.ua', password: '123456' };
+      const fakeUser: AuthData = { email: 'test@test.ua', password: '123456' };
       const store = mockStore();
       mockAPI
         .onPost(APIRoute.Login)

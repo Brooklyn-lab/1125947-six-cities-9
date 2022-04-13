@@ -1,38 +1,46 @@
-import { FormEvent, useEffect, useRef, useState } from 'react';
+import { SyntheticEvent, useEffect, useLayoutEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { AppRoute, LOCATIONS } from '../../const';
-import { useAppDispatch } from '../../hooks';
+import { AppRoute, AuthorizationStatus, LOCATIONS } from '../../const';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { redirectToRoute } from '../../store/action';
 import { loginAction } from '../../store/api-actions';
 import { changeCity } from '../../store/offers-data/offers-data';
 import { getLoginName } from '../../store/user-process/user-process';
-import { AuthData } from '../../types/auth-data';
 import { getRandomInt } from '../../utils/utils';
 import Header from '../header/header';
+import { toast } from 'react-toastify';
+
+const passwordWarningText = 'Password should contain minimum one letter and one number';
+
+export const validatePassword = (password: string) => password.match(/[A-Za-z]/) !== null && password.match(/[0-9]/) !== null;
 
 function LoginScreen(): JSX.Element {
-  const loginRef = useRef<HTMLInputElement | null>(null);
-  const passwordRef = useRef<HTMLInputElement | null>(null);
   const [city, setCity] = useState('');
   const randomCityName = () => LOCATIONS[getRandomInt(0, LOCATIONS.length - 1)];
   const dispatch = useAppDispatch();
+  const authorizationStatus = useAppSelector(({ USER }) => USER.authorizationStatus);
+
+  useLayoutEffect(() => {
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      dispatch(redirectToRoute(AppRoute.Main));
+    }
+  }, [dispatch, authorizationStatus]);
 
   useEffect(() => {
     setCity(randomCityName());
   }, [city]);
 
-  const onSubmit = (authData: AuthData) => {
-    dispatch(loginAction(authData));
-  };
-
-  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (evt: SyntheticEvent) => {
     evt.preventDefault();
 
-    if (loginRef.current !== null && passwordRef.current !== null) {
-      dispatch(getLoginName(loginRef.current.value));
-      onSubmit({
-        login: loginRef.current.value,
-        password: passwordRef.current.value,
-      });
+    if (evt.target instanceof HTMLFormElement) {
+      const formData = new FormData(evt.target);
+      const authData = {
+        email: formData.get('email') as string,
+        password: formData.get('password') as string,
+      };
+      dispatch(getLoginName(authData.email));
+      validatePassword(authData.password) ? dispatch(loginAction(authData)) : toast.warn(passwordWarningText);
     }
   };
 
@@ -64,7 +72,6 @@ function LoginScreen(): JSX.Element {
                     E-mail
                   </label>
                   <input
-                    ref={loginRef}
                     className="login__input form__input"
                     type="email"
                     name="email"
@@ -80,11 +87,11 @@ function LoginScreen(): JSX.Element {
                     Password
                   </label>
                   <input
-                    ref={passwordRef}
                     className="login__input form__input"
                     type="password"
                     name="password"
                     placeholder="Password"
+                    title={passwordWarningText}
                     required
                   />
                 </div>

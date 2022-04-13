@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -9,6 +11,7 @@ import CardList from '../card-list/card-list';
 import { getRating, toCapitalLetter } from '../../utils/utils';
 import ReviewsContainer from '../reviews-container/reviews-container';
 import ButtonFavorite from '../button-favorite/button-favorite';
+import NotFoundScreen from '../not-found-screen/not-found-screen';
 
 function PropertyScreen(): JSX.Element {
   const { id } = useParams();
@@ -24,12 +27,14 @@ function PropertyScreen(): JSX.Element {
   const { images, isPremium, title, goods, price, host, description, rating, bedrooms, maxAdults, type, isFavorite } = selectedOffer;
   const hotelId = selectedOffer.id;
 
+  if (!isSelectedOfferLoaded) {
+    return (<LoadingScreen />);
+  }
+
   return (
     <div className="page">
       <p className="visually-hidden">Property</p>
-      {(!isSelectedOfferLoaded) ?
-        <LoadingScreen />
-        :
+      {(selectedOffer.id) ?
         <>
           <HeaderScreen />
 
@@ -132,7 +137,9 @@ function PropertyScreen(): JSX.Element {
               </section>
             </div>
           </main>
-        </>}
+        </>
+        :
+        <NotFoundScreen />}
     </div>
   );
 }
